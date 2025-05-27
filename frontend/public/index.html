@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3B82F6',
+              secondary: '#64748B'
+            },
+            borderRadius: {
+              'none': '0px',
+              'sm': '2px',
+              DEFAULT: '4px',
+              'md': '8px',
+              'lg': '12px',
+              'xl': '16px',
+              '2xl': '20px',
+              '3xl': '24px',
+              'full': '9999px',
+              'button': '4px'
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        min-height: 1024px;
+      }
+    
+      .menu-item:hover {
+        background-color: rgba(59, 130, 246, 0.1);
+      }
+    
+      .menu-item.active {
+        background-color: rgba(59, 130, 246, 0.1);
+        border-left: 3px solid #3B82F6;
+      }
+    
+      .architecture-diagram {
+        min-height: 400px;
+        background-color: #f8fafc;
+        border: 1px dashed #cbd5e1;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748b;
+      }
+
+      input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            border: 1px solid #E5E7EB;
+            border-radius: 4px;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: #3B82F6;
+            border-color: transparent;
+        }
+
+        input[type="checkbox"]:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .bg-image {
+            background-image: url('https://ai-public.mastergo.com/ai/img_res/2fa3fc72b4a8d39fcd07fe5c635207db.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .table-column {
+            min-width: 150px;
+        }
+
+        .sql-code {
+            font-family: monospace;
+            white-space: pre;
+        }
+    </style>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
