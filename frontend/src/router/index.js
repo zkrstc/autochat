@@ -27,32 +27,38 @@ const routes = [
             {
                 path: 'requirements',
                 name: 'Requirements',
-                component: RequirementPage
+                component: RequirementPage,
+                meta: { title: '需求管理' }
             },
             {
                 path: 'architecture',
                 name: 'Architecture',
-                component: ArchitecturePage
+                component: ArchitecturePage,
+                meta: { title: '架构设计' }
             },
             {
                 path: 'databasedesign',
                 name: 'DatabaseDesign',
-                component: DatabaseDesignPage
+                component: DatabaseDesignPage,
+                meta: { title: '数据库设计' }
             },
             {
                 path: 'modulecode',
                 name: 'ModuleCode',
-                component: ModuleCodePage
+                component: ModuleCodePage,
+                meta: { title: '模块代码' }
             },
             {
                 path: 'testcases',
                 name: 'TestCases',
-                component: TestCasesPage
+                component: TestCasesPage,
+                meta: { title: '测试用例生成' }
             },
             {
                 path: 'history',
                 name: 'History',
-                component: HistoryPage
+                component: HistoryPage,
+                meta: { title: '版本历史' }
             }
         ]
     }

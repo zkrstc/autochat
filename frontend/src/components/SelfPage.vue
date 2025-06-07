@@ -1,7 +1,7 @@
 <template>
     <header class="bg-white shadow-sm">
                 <div class="flex justify-between items-center px-8 py-4">
-                    <div class="text-xl font-medium">架构设计</div>
+                    <div class="text-xl font-medium">{{ currentTitle }}</div>
                     <div class="relative">
                         <button class="flex items-center space-x-3 !rounded-button">
                             <img src="https://ai-public.mastergo.com/ai/img_res/c7de0a2547793954cd19a41b0e9ca26a.jpg"
@@ -26,18 +26,30 @@
   </template>
   
   <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const currentTitle = ref('');
+
+watch(
+  () => route.meta.title,  // 直接监听meta.title
+  (newTitle) => {
+    currentTitle.value = newTitle || '默认标题';
+  },
+  { immediate: true }
+);
 
 onMounted(() => {
   const button = document.querySelector('button:has(img)');
   const dropdown = document.querySelector('.absolute.right-0');
-
+    
   if (button && dropdown) {
     button.addEventListener('click', function () {
       dropdown.classList.toggle('hidden');
     });
   }
 });
+
   </script>
   
   <style scoped>
