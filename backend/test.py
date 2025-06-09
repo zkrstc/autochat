@@ -243,6 +243,94 @@ def get_architecture(requirement_id):
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
+
+
+
+@app.route('/api/architectures/generate', methods=['POST'])
+def generate_architecture():
+    # 获取请求数据
+    data = request.get_json()
+    requirement_id = data.get('requirement_id')
+    user_id = data.get('user_id')  # 当前用户ID
+    
+    if not requirement_id or not user_id:
+        return jsonify({'error': 'Missing requirement_id or user_id', 'status': 400}), 400
+    
+    # 获取需求文档内容
+    requirement = Requirement.query.get(requirement_id)
+    if not requirement:
+        return jsonify({'error': 'Requirement not found', 'status': 404}), 404
+    
+    # 构建AI提示
+    prompt = f"""
+    根据以下需求文档内容，设计一个合理的软件系统架构，包括架构图描述、技术栈和模块划分：
+    
+    需求文档内容：
+    {requirement.content}
+    
+    请按照以下JSON格式返回结果：
+    {{
+        "architectureDiagram": {{
+            "description": "架构描述",
+            "diagram": "ASCII架构图"
+        }},
+        "technologyStack": {{
+            "frontend": "前端技术栈",
+            "backend": "后端技术栈",
+            "database": "数据库技术栈"
+        }},
+        "modules": [
+            "模块1",
+            "模块2",
+            "..."
+        ]
+    }}
+    """
+    
+    try:
+        # 调用OpenAI API
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "你是一个资深的软件架构师，擅长设计清晰、可扩展的系统架构。"},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=1000
+        )
+        
+        # 解析AI响应
+        ai_response = response.choices[0].message.content
+        architecture_data = json.loads(ai_response)
+        
+        # 创建架构记录
+        new_architecture = Architecture(
+            requirement_id=requirement_id,
+            architecture_json=architecture_data,
+            generated_by=user_id,
+            created_at=datetime.utcnow()
+        )
+        
+        db.session.add(new_architecture)
+        db.session.commit()
+        
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'id': new_architecture.id,
+                'requirement_id': new_architecture.requirement_id,
+                'architecture_json': new_architecture.architecture_json,
+                'generated_by': new_architecture.generated_by,
+                'created_at': new_architecture.created_at.isoformat()
+            }
+        })
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+
 @app.route('/api/modules/generate', methods=['POST'])
 def generate_modules():
     data = request.get_json()

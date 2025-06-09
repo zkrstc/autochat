@@ -14,8 +14,10 @@
                 </select>
             </div>
             <button id="generateBtn"
-                class="px-6 py-2 bg-primary text-white !rounded-button hover:bg-blue-600 transition-colors">
-                <i class="fas fa-magic mr-2"></i>生成架构
+                class="px-6 py-2 bg-primary text-white !rounded-button hover:bg-blue-600 transition-colors"
+                @click="generateArchitecture" :disabled="!selectedRequirement || isLoading">
+                <i class="fas fa-magic mr-2"></i>
+                {{ isLoading ? '生成中...' : '生成架构' }}
             </button>
         </div>
 
@@ -249,6 +251,43 @@ export default {
             link.href = URL.createObjectURL(blob);
             link.download = `architecture-${this.architecture.id}.txt`;
             link.click();
+        },
+        // 生成架构按钮点击处理
+        async generateArchitecture() {
+            if (!this.selectedRequirement) {
+                this.$toast.warning('请先选择需求');
+                return;
+            }
+
+            this.isLoading = true;
+            try {
+                const userId = this.$store.state.user.id; // 假设用户ID存储在Vuex中
+
+                const response = await fetch('/api/architectures/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.$store.state.token}` // 如果需要认证
+                    },
+                    body: JSON.stringify({
+                        requirement_id: this.selectedRequirement,
+                        user_id: userId
+                    })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    this.architecture = data.data;
+                    this.$toast.success('架构生成成功！');
+                } else {
+                    throw new Error(data.message || 'Failed to generate architecture');
+                }
+            } catch (error) {
+                console.error('Error generating architecture:', error);
+                this.$toast.error('生成架构失败: ' + error.message);
+            } finally {
+                this.isLoading = false;
+            }
         }
     }
 }
