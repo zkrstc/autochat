@@ -8,7 +8,6 @@ from werkzeug.security import check_password_hash
 import os
 
 import openai
-#openai.api_key = "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"
 
 app = Flask(__name__)
 CORS(app)
