@@ -1,997 +1,202 @@
--- 
--- -- 创建需求表
--- CREATE TABLE requirements (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     user_id INT NOT NULL,
---     content TEXT NOT NULL,
--- 		name TEXT,
---     version INT DEFAULT 1,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (user_id) REFERENCES users(id)
--- );
--- 
--- -- 创建架构设计表
--- CREATE TABLE architectures (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     requirement_id INT NOT NULL,
---     architecture_json TEXT NOT NULL,
---     generated_by VARCHAR(20) NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (requirement_id) REFERENCES requirements(id)
--- );
--- 
--- -- 创建模块代码表
--- CREATE TABLE module_codes (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     architecture_id INT NOT NULL,
---     module_name VARCHAR(50) NOT NULL,
---     language VARCHAR(20) NOT NULL,
---     code TEXT NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (architecture_id) REFERENCES architectures(id)
--- );
--- 
--- -- 创建数据库设计表
--- CREATE TABLE database_designs (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     requirement_id INT NOT NULL,
---     erd_diagram TEXT,
---     sql_script TEXT,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (requirement_id) REFERENCES requirements(id)
--- );
--- 
--- -- 创建测试用例表
--- CREATE TABLE test_cases (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     requirement_id INT NOT NULL,
---     input_data TEXT NOT NULL,
---     expected_output TEXT NOT NULL,
---     type VARCHAR(30) NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (requirement_id) REFERENCES requirements(id)
--- );
--- 
--- -- 创建部署记录表
--- CREATE TABLE deployment_logs (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     architecture_id INT NOT NULL,
---     status VARCHAR(20) NOT NULL,
---     log_output TEXT,
---     executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (architecture_id) REFERENCES architectures(id)
--- );
--- 
--- -- 创建版本历史表
--- CREATE TABLE version_history (
---     id INT PRIMARY KEY AUTO_INCREMENT,
---     entity_type VARCHAR(30) NOT NULL,
---     entity_id INT NOT NULL,
---     version INT NOT NULL,
---     data_snapshot TEXT NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
--- 
--- 
--- -- 插入管理员用户
--- INSERT INTO users (username, email, password_hash, role, created_at) 
--- VALUES ('admin', 'admin@meishi.com', 'hashedpassword123', 'admin', '2023-11-01 10:00:00');
--- 
--- -- 插入普通用户
--- INSERT INTO users (username, email, password_hash, role, created_at) 
--- VALUES ('zhangsan', 'zhangsan@meishi.com', 'hashedpassword456', 'student', '2023-11-02 09:30:00');
--- 
--- 插入外卖系统需求
-INSERT INTO requirements (user_id, name,content, version, created_at) 
-VALUES (2, '开发一个外卖系统，包含用户下单、商家接单、骑手配送、订单管理等功能模块','外卖系统需求文档
-1. 项目概述
-本项目旨在开发一个功能完善的外卖系统，实现用户在线下单、商家接单、骑手配送以及订单管理的完整流程。系统应具备良好的用户体验、高效的订单处理能力和稳定的安全性。
-
-2. 用户角色
-用户：浏览菜单、下单、支付、查看订单状态、评价订单。
-商家：管理菜单、接收订单、处理订单、查看订单历史。
-骑手：接收配送任务、查看配送路线、更新订单状态、查看收入。
-管理员：管理系统设置、用户管理、商家管理、骑手管理、数据统计。
-3. 功能模块
-3.1 用户模块
-3.1.1 用户注册与登录
-支持手机号、邮箱注册和登录。
-支持第三方账号（如微信、支付宝）登录。
-忘记密码功能，通过手机号或邮箱重置密码。
-3.1.2 浏览菜单
-按分类浏览商家和菜品。
-搜索商家和菜品。
-查看菜品详情，包括图片、价格、描述等。
-查看商家详情，包括地址、营业时间、评分、评价等。
-3.1.3 下单
-选择菜品、规格、数量，加入购物车。
-填写配送地址、联系方式、备注等信息。
-选择支付方式（如支付宝、微信支付、银行卡支付等）。
-使用优惠券、红包等优惠活动。
-确认订单并支付。
-3.1.4 订单管理
-查看订单状态（待支付、已接单、配送中、已完成、已取消等）。
-查看订单详情，包括菜品信息、价格、配送费、优惠信息等。
-取消订单（在商家接单前可取消）。
-催单。
-确认收货。
-评价订单和商家。
-3.2 商家模块
-3.2.1 商家注册与登录
-商家注册需审核，包括营业执照、餐饮服务许可证等信息。
-商家登录后可管理店铺信息。
-3.2.2 菜单管理
-添加、编辑、删除菜品。
-设置菜品分类、规格、价格、图片、描述等信息。
-设置菜品库存。
-3.2.3 订单管理
-实时接收新订单通知。
-查看订单详情，包括菜品信息、用户信息、配送地址等。
-接单、拒绝订单。
-打印订单小票。
-查看订单历史。
-3.2.4 数据统计
-查看店铺营业额、订单量、用户评价等数据。
-导出数据报表。
-3.3 骑手模块
-3.3.1 骑手注册与登录
-骑手注册需审核，包括身份证、健康证等信息。
-骑手登录后可接收配送任务。
-3.3.2 配送任务
-查看可接单的配送任务。
-接受或拒绝配送任务。
-查看配送路线和导航。
-更新订单状态（已取餐、配送中、已送达）。
-3.3.3 收入管理
-查看配送收入。
-提现。
-3.4 订单管理模块
-3.4.1 订单状态管理
-系统自动更新订单状态，包括待支付、已接单、配送中、已完成、已取消等。
-用户、商家、骑手可查看订单状态。
-3.4.2 订单分配
-系统根据算法自动分配订单给合适的骑手。
-管理员可手动分配订单。
-3.4.3 订单跟踪
-用户、商家、骑手可实时跟踪订单位置和状态。
-3.5 管理员模块
-3.5.1 系统设置
-管理系统参数，如配送费、起送价、服务费率等。
-管理支付方式。
-3.5.2 用户管理
-查看用户信息。
-禁用或删除用户账号。
-3.5.3 商家管理
-审核商家注册信息。
-查看商家信息。
-禁用或删除商家账号。
-3.5.4 骑手管理
-审核骑手注册信息。
-查看骑手信息。
-禁用或删除骑手账号。
-3.5.5 数据统计
-查看系统整体数据，如订单量、营业额、用户数、商家数、骑手数等。
-导出数据报表。
-4. 技术要求
-前端：Vue.js、HTML5、CSS3、JavaScript。
-后端：Node.js、Express、MongoDB。
-支付接口：支付宝、微信支付。
-地图服务：高德地图或百度地图。
-推送服务：极光推送或个推。
-5. 安全要求
-用户密码加密存储。
-支付接口安全认证。
-数据传输加密。
-防止SQL注入、XSS攻击等安全漏洞。
-6. 性能要求
-系统响应时间小于2秒。
-高并发处理能力，支持1000+并发用户。
-数据库读写性能优化。
-7. 部署与运维
-支持云服务器部署，如阿里云、腾讯云等。
-监控系统运行状态，包括服务器负载、数据库性能等。
-定期备份数据库。
-8. 测试要求
-功能测试：覆盖所有功能模块。
-性能测试：模拟高并发场景。
-安全测试：检测安全漏洞。
-兼容性测试：支持主流浏览器和移动设备。
-9. 项目时间表
-需求分析：2周
-设计阶段：2周
-开发阶段：8周
-测试阶段：2周
-部署上线：1周
-总计：15周
-10. 团队组成
-项目经理：1人
-前端开发工程师：2人
-后端开发工程师：2人
-测试工程师：1人
-UI设计师：1人
-11. 预算
-人力成本：根据团队组成和市场行情估算
-服务器成本：根据部署方案估算
-第三方服务成本：支付接口、地图服务、推送服务等
-总预算：根据各项成本汇总', 1, '2023-11-03 14:20:00');
-
-INSERT INTO architectures (requirement_id, architecture_json, generated_by)
-VALUES (
-    1,
-    '{
-        "systemDiagram": "plaintext\n------------------- ------------------- -------------------\n 前端(Vue.js)      后端(Flask)         数据库(MySQL) \n------------------- ------------------- -------------------\n",
-        "recommendedTechStack": {
-            "frontend": "Vue 3 + Pinia + Element Plus",
-            "backend": "Python Flask + Flask-SQLAlchemy",
-            "database": "MySQL 8.0"
-        },
-        "module划分": {
-            "core": ["用户管理", "商品管理", "订单流程"],
-            "optional": ["数据统计", "系统配置"]
-        },
-        "directoryStructure": {
-            "frontend": {
-                "src/": {
-                    "api/": "API请求封装",
-                    "assets/": "静态资源",
-                    "components/": {
-                        "common/": "通用组件",
-                        "user/": "用户相关组件",
-                        "product/": "商品相关组件",
-                        "order/": "订单相关组件"
-                    },
-                    "router/": "路由配置",
-                    "stores/": "Pinia状态管理",
-                    "views/": {
-                        "User/": "用户页面",
-                        "Product/": "商品页面",
-                        "Order/": "订单页面"
-                    },
-                    "App.vue": "根组件",
-                    "main.js": "入口文件"
-                }
-            },
-            "backend": {
-                "app/": {
-                    "controllers/": {
-                        "user_controller.py": "用户接口",
-                        "product_controller.py": "商品接口",
-                        "order_controller.py": "订单接口"
-                    },
-                    "models/": {
-                        "user.py": "用户模型",
-                        "product.py": "商品模型",
-                        "order.py": "订单模型"
-                    },
-                    "services/": {
-                        "user_service.py": "用户服务",
-                        "product_service.py": "商品服务",
-                        "order_service.py": "订单服务"
-                    },
-                    "__init__.py": "应用初始化",
-                    "config.py": "配置文件",
-                    "extensions.py": "扩展组件"
-                },
-                "migrations/": "数据库迁移脚本",
-                "requirements.txt": "依赖文件",
-                "run.py": "启动脚本"
-            },
-            "database": {
-                "schema.sql": "数据库初始化脚本",
-                "sample_data.sql": "示例数据"
-            }
-        },
-        "codeTemplates": {
-    "frontend": {
-        "component": "<template>\\n  <div class=\"component\">\\n    <!-- 组件内容 -->\\n  </div>\\n</template>\\n\\n<script setup>\\n// 逻辑代码\\n</script>\\n\\n<style scoped>\\n/* 样式 */\\n</style>",
-        "api": "import axios from \'axios\';\\n\\nexport const getData = (params) => {\\n  return axios.get(\'/api/endpoint\', { params });\\n};"
-    },
-    "backend": {
-        "controller": "from flask import Blueprint, request, jsonify\\nfrom app.services import service_module\\n\\nbp = Blueprint(\'module\', __name__, url_prefix=\'/api/module\')\\n\\n@bp.route(\'/\', methods=[\'GET\'])\\ndef get_items():\\n    data = service_module.get_items()\\n    return jsonify(data)",
-        "model": "from app.extensions import db\\n\\nclass Model(db.Model):\\n    __tablename__ = \'table_name\'\\n    id = db.Column(db.Integer, primary_key=True)\\n    # 其他字段"
-    }
-}
-    }',
-    'admin'
-);
-
-
-INSERT INTO database_designs (
-    requirement_id, 
-    erd_diagram, 
-    sql_script
-) VALUES (
-    1,
-    'plaintext
-    +-------------+       +-------------+       +-------------+
-    |    User     |       |  Product    |       |    Order    |
-    +-------------+       +-------------+       +-------------+
-    | id (PK)     |       | id (PK)     |       | id (PK)     |
-    | name        |       | shop_id (FK)|       | user_id (FK)|
-    | phone       |       | name        |       | shop_id (FK)|
-    | password    |       | price       |       | status      |
-    +-------------+       +-------------+       | total       |
-          |                     |              | created_at  |
-          |                     |              +-------------+
-          |                     |                    |
-          |                     +----------+         |
-          |                                |         |
-          v                                v         v
-    +--------------------------+-----------------------------+
-    |         OrderItem        |         Shop               |
-    +--------------------------+-----------------------------+
-    | order_id (PK,FK)         | id (PK)                    |
-    | product_id (PK,FK)       | name                       |
-    | quantity                 | address                    |
-    | price_at_order           +-----------------------------+
-    +--------------------------+',
-    
-    '-- 外卖系统核心数据库设计
-    CREATE TABLE users (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        name VARCHAR(50) NOT NULL,
-        phone VARCHAR(20) NOT NULL UNIQUE,
-        password VARCHAR(100) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        INDEX idx_user_phone (phone)
-    );
-    
-    CREATE TABLE shops (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        name VARCHAR(50) NOT NULL,
-        address VARCHAR(200),
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-    
-    CREATE TABLE products (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        shop_id INT NOT NULL,
-        name VARCHAR(100) NOT NULL,
-        price DECIMAL(10,2) NOT NULL,
-        description TEXT,
-        FOREIGN KEY (shop_id) REFERENCES shops(id),
-        INDEX idx_shop_product (shop_id)
-    );
-    
-    CREATE TABLE orders (
-        id INT PRIMARY KEY AUTO_INCREMENT,
-        user_id INT NOT NULL,
-        shop_id INT NOT NULL,
-        status ENUM(\'pending\', \'preparing\', \'delivering\', \'completed\', \'cancelled\') DEFAULT \'pending\',
-        total DECIMAL(10,2) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id),
-        FOREIGN KEY (shop_id) REFERENCES shops(id),
-        INDEX idx_order_user (user_id),
-        INDEX idx_order_shop (shop_id),
-        INDEX idx_order_status (status)
-    );
-    
-    CREATE TABLE order_items (
-        order_id INT NOT NULL,
-        product_id INT NOT NULL,
-        quantity INT NOT NULL DEFAULT 1,
-        price_at_order DECIMAL(10,2) NOT NULL,
-        PRIMARY KEY (order_id, product_id),
-        FOREIGN KEY (order_id) REFERENCES orders(id),
-        FOREIGN KEY (product_id) REFERENCES products(id)
-    );
-    
-    -- 初始化示例数据
-    INSERT INTO shops (name, address) VALUES 
-    (\'川湘阁\', \'科技园路101号\'),
-    (\'粤式茶餐厅\', \'中山北路202号\');
-    
-    INSERT INTO products (shop_id, name, price, description) VALUES
-    (1, \'水煮鱼\', 68.00, \'招牌川菜，麻辣鲜香\'),
-    (1, \'回锅肉\', 48.00, \'传统川味，肥而不腻\'),
-    (2, \'虾饺皇\', 28.00, \'广式早茶经典\'),
-    (2, \'干炒牛河\', 32.00, \'粤式招牌主食\');'
-);
-
-
-
--- 1. 用户模型 (Python)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '用户模块',
-    'Python',
-    'from app.extensions import db
-from werkzeug.security import generate_password_hash, check_password_hash
-
-class User(db.Model):
-    __tablename__ = \'users\'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    phone = db.Column(db.String(20), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
-    def set_password(self, password):
-        self.password = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password, password)
-
-    def to_dict(self):
-        return {
-            \'id\': self.id,
-            \'name\': self.name,
-            \'phone\': self.phone,
-            \'created_at\': self.created_at.isoformat()
-        }'
-);
-
--- 2. 用户控制器 (Python)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '用户模块',
-    'Python',
-    'from flask import Blueprint, request, jsonify
-from werkzeug.security import generate_password_hash
-from app.models.user import User
-from app.extensions import db
-
-bp = Blueprint(\'user\', __name__, url_prefix=\'/api/users\')
-
-@bp.route(\'/register\', methods=[\'POST\'])
-def register():
-    data = request.get_json()
-    if User.query.filter_by(phone=data[\'phone\']).first():
-        return jsonify({\'error\': \'Phone already registered\'}), 400
-    
-    user = User(
-        name=data[\'name\'],
-        phone=data[\'phone\'],
-    )
-    user.set_password(data[\'password\'])
-    db.session.add(user)
-    db.session.commit()
-    return jsonify(user.to_dict()), 201
-
-@bp.route(\'/login\', methods=[\'POST\'])
-def login():
-    data = request.get_json()
-    user = User.query.filter_by(phone=data[\'phone\']).first()
-    if not user or not user.check_password(data[\'password\']):
-        return jsonify({\'error\': \'Invalid phone or password\'}), 401
-    
-    return jsonify({
-        \'user\': user.to_dict(),
-        \'token\': \'generated_jwt_token\'  # 实际项目应实现JWT
-    })'
-);
-
--- 3. 用户登录组件 (Vue.js)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '用户模块',
-    'Vue.js',
-    '<template>
-  <div class="login-container">
-    <el-form :model="form" :rules="rules" ref="loginForm" class="login-form">
-      <h2 class="title">外卖系统登录</h2>
-      <el-form-item prop="phone">
-        <el-input v-model="form.phone" placeholder="手机号"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input v-model="form.password" type="password" placeholder="密码"></el-input>
-      </el-form-item>
-      <el-button type="primary" @click="handleLogin" class="login-btn">登录</el-button>
-      <div class="register-link">
-        没有账号？<router-link to="/register">立即注册</router-link>
-      </div>
-    </el-form>
-  </div>
-</template>
-
-<script setup>
-import { ref } from \'vue\'
-import { useRouter } from \'vue-router\'
-import { ElMessage } from \'element-plus\'
-import { login } from \'@/api/user\'
-
-const router = useRouter()
-const form = ref({ phone: \'\', password: \'\' })
-const rules = {
-  phone: [{ required: true, message: \'请输入手机号\', trigger: \'blur\' }],
-  password: [{ required: true, message: \'请输入密码\', trigger: \'blur\' }]
-}
-
-const handleLogin = async () => {
-  try {
-    const res = await login(form.value)
-    localStorage.setItem(\'token\', res.token)
-    ElMessage.success(\'登录成功\')
-    router.push(\'/products\')
-  } catch (error) {
-    ElMessage.error(error.message)
-  }
-}
-</script>
-
-<style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f5f5f5;
-}
-.login-form {
-  width: 400px;
-  padding: 40px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-.title {
-  margin-bottom: 30px;
-  text-align: center;
-  color: #333;
-}
-.login-btn {
-  width: 100%;
-  margin-top: 20px;
-}
-.register-link {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
-}
-</style>'
-);
-
-
--- 1. 商品模型 (Python)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '商品模块',
-    'Python',
-    'from app.extensions import db
-
-class Product(db.Model):
-    __tablename__ = \'products\'
-    id = db.Column(db.Integer, primary_key=True)
-    shop_id = db.Column(db.Integer, db.ForeignKey(\'shops.id\'), nullable=False)
-    name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Numeric(10,2), nullable=False)
-    description = db.Column(db.Text)
-    
-    shop = db.relationship(\'Shop\', backref=\'products\')
-
-    def to_dict(self):
-        return {
-            \'id\': self.id,
-            \'shop_id\': self.shop_id,
-            \'name\': self.name,
-            \'price\': float(self.price),
-            \'description\': self.description
-        }'
-);
-
--- 2. 商品控制器 (Python)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '商品模块',
-    'Python',
-    'from flask import Blueprint, jsonify
-from app.models.product import Product
-
-bp = Blueprint(\'product\', __name__, url_prefix=\'/api/products\')
-
-@bp.route(\'/\', methods=[\'GET\'])
-def get_products():
-    products = Product.query.all()
-    return jsonify([p.to_dict() for p in products])
-
-@bp.route(\'/shop/<int:shop_id>\', methods=[\'GET\'])
-def get_shop_products(shop_id):
-    products = Product.query.filter_by(shop_id=shop_id).all()
-    return jsonify([p.to_dict() for p in products])'
-);
-
--- 3. 商品列表组件 (Vue.js)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '商品模块',
-    'Vue.js',
-    '<template>
-  <div class="product-container">
-    <el-row :gutter="20">
-      <el-col :span="6" v-for="product in products" :key="product.id">
-        <el-card class="product-card">
-          <div class="product-image">
-            <img :src="product.image || \'https://via.placeholder.com/150\'" alt="商品图片">
-          </div>
-          <h3 class="product-name">{{ product.name }}</h3>
-          <p class="product-price">¥{{ product.price.toFixed(2) }}</p>
-          <p class="product-desc">{{ product.description }}</p>
-          <el-button type="primary" @click="addToCart(product)">加入购物车</el-button>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
-</template>
-
-<script setup>
-import { ref, onMounted } from \'vue\'
-import { getProducts } from \'@/api/product\'
-import { ElMessage } from \'element-plus\'
-
-const products = ref([])
-const cart = ref([])
-
-onMounted(async () => {
-  try {
-    const res = await getProducts()
-    products.value = res.data
-  } catch (error) {
-    ElMessage.error(\'获取商品列表失败\')
-  }
-})
-
-const addToCart = (product) => {
-  cart.value.push(product)
-  ElMessage.success(\'已添加到购物车\')
-}
-</script>
-
-<style scoped>
-.product-container {
-  padding: 20px;
-}
-.product-card {
-  margin-bottom: 20px;
-  height: 100%;
-}
-.product-image img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-.product-name {
-  font-size: 16px;
-  margin: 10px 0;
-}
-.product-price {
-  color: #f56c6c;
-  font-weight: bold;
-  margin: 10px 0;
-}
-.product-desc {
-  color: #909399;
-  font-size: 12px;
-  margin-bottom: 15px;
-}
-</style>'
-);
-
-
-
--- 1. 订单模型 (Python)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '订单模块',
-    'Python',
-    'from datetime import datetime
-from app.extensions import db
-
-class Order(db.Model):
-    __tablename__ = \'orders\'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(\'users.id\'), nullable=False)
-    shop_id = db.Column(db.Integer, db.ForeignKey(\'shops.id\'), nullable=False)
-    status = db.Column(db.String(20), default=\'pending\')
-    total = db.Column(db.Numeric(10,2), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
-    user = db.relationship(\'User\', backref=\'orders\')
-    shop = db.relationship(\'Shop\', backref=\'orders\')
-    items = db.relationship(\'OrderItem\', backref=\'order\', lazy=\'dynamic\')
-
-    def to_dict(self):
-        return {
-            \'id\': self.id,
-            \'user_id\': self.user_id,
-            \'shop_id\': self.shop_id,
-            \'status\': self.status,
-            \'total\': float(self.total),
-            \'created_at\': self.created_at.isoformat(),
-            \'items\': [item.to_dict() for item in self.items]
-        }'
-);
-
--- 2. 订单控制器 (Python)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '订单模块',
-    'Python',
-    'from flask import Blueprint, request, jsonify
-from app.models.order import Order, OrderItem
-from app.models.product import Product
-from app.extensions import db
-from datetime import datetime
-
-bp = Blueprint(\'order\', __name__, url_prefix=\'/api/orders\')
-
-@bp.route(\'/\', methods=[\'POST\'])
-def create_order():
-    data = request.get_json()
-    
-    # 计算总价
-    total = sum(item[\'price\'] * item[\'quantity\'] for item in data[\'items\'])
-    
-    order = Order(
-        user_id=data[\'user_id\'],
-        shop_id=data[\'shop_id\'],
-        total=total,
-        status=\'pending\'
-    )
-    db.session.add(order)
-    db.session.flush()  # 获取order.id
-    
-    # 添加订单项
-    for item in data[\'items\']:
-        product = Product.query.get(item[\'product_id\'])
-        order_item = OrderItem(
-            order_id=order.id,
-            product_id=product.id,
-            quantity=item[\'quantity\'],
-            price_at_order=product.price
-        )
-        db.session.add(order_item)
-    
-    db.session.commit()
-    return jsonify(order.to_dict()), 201
-
-@bp.route(\'/user/<int:user_id>\', methods=[\'GET\'])
-def get_user_orders(user_id):
-    orders = Order.query.filter_by(user_id=user_id).order_by(Order.created_at.desc()).all()
-    return jsonify([o.to_dict() for o in orders])'
-);
-
--- 3. 订单创建组件 (Vue.js)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    '订单模块',
-    'Vue.js',
-    '<template>
-  <div class="order-create">
-    <el-steps :active="active" finish-status="success">
-      <el-step title="选择商品"></el-step>
-      <el-step title="确认订单"></el-step>
-      <el-step title="完成支付"></el-step>
-    </el-steps>
-    
-    <div v-if="active === 0" class="step-content">
-      <product-list @add-to-cart="addToCart"></product-list>
-    </div>
-    
-    <div v-if="active === 1" class="step-content">
-      <el-table :data="cartItems" style="width: 100%">
-        <el-table-column prop="name" label="商品"></el-table-column>
-        <el-table-column prop="price" label="单价" width="120"></el-table-column>
-        <el-table-column prop="quantity" label="数量" width="120">
-          <template #default="{row}">
-            <el-input-number v-model="row.quantity" :min="1"></el-input-number>
-          </template>
-        </el-table-column>
-        <el-table-column label="小计" width="120">
-          <template #default="{row}">¥{{ (row.price * row.quantity).toFixed(2) }}</template>
-        </el-table-column>
-      </el-table>
-      <div class="total-price">
-        总计：¥{{ totalPrice.toFixed(2) }}
-      </div>
-    </div>
-    
-    <div v-if="active === 2" class="step-content">
-      <el-result icon="success" title="订单提交成功">
-        <template #extra>
-          <el-button type="primary" @click="goToOrders">查看订单</el-button>
-        </template>
-      </el-result>
-    </div>
-    
-    <div class="action-buttons">
-      <el-button v-if="active > 0" @click="prev">上一步</el-button>
-      <el-button v-if="active < 2" type="primary" @click="next">下一步</el-button>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref, computed } from \'vue\'
-import { useRouter } from \'vue-router\'
-import { ElMessage } from \'element-plus\'
-import { createOrder } from \'@/api/order\'
-import ProductList from \'@/views/Product/List.vue\'
-
-const router = useRouter()
-const active = ref(0)
-const cartItems = ref([])
-
-const totalPrice = computed(() => {
-  return cartItems.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
-})
-
-const addToCart = (product) => {
-  const existItem = cartItems.value.find(item => item.id === product.id)
-  if (existItem) {
-    existItem.quantity += 1
-  } else {
-    cartItems.value.push({ ...product, quantity: 1 })
-  }
-}
-
-const next = async () => {
-  if (active.value === 1) {
-    try {
-      const orderData = {
-        user_id: 1, // 实际项目中从登录状态获取
-        shop_id: 1, // 实际项目中根据选择获取
-        items: cartItems.value.map(item => ({
-          product_id: item.id,
-          quantity: item.quantity,
-          price: item.price
-        }))
-      }
-      await createOrder(orderData)
-      active.value++
-    } catch (error) {
-      ElMessage.error(\'创建订单失败\')
-    }
-  } else {
-    active.value++
-  }
-}
-
-const prev = () => {
-  active.value--
-}
-
-const goToOrders = () => {
-  router.push(\'/orders\')
-}
-</script>
-
-<style scoped>
-.order-create {
-  padding: 20px;
-}
-.step-content {
-  margin: 30px 0;
-}
-.total-price {
-  margin-top: 20px;
-  text-align: right;
-  font-size: 18px;
-  font-weight: bold;
-}
-.action-buttons {
-  margin-top: 20px;
-  text-align: center;
-}
-</style>'
-);
-
-
-
--- 前端API客户端 (JavaScript)
-INSERT INTO module_codes (architecture_id, module_name, language, code)
-VALUES (
-    3,
-    'API客户端',
-    'JavaScript',
-    'import axios from \'axios\'
-
-const api = axios.create({
-  baseURL: process.env.VUE_APP_API_URL || \'/api\',
-  timeout: 10000
-})
-
-// 请求拦截器
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem(\'token\')
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
-
-// 响应拦截器
-api.interceptors.response.use(
-  response => response.data,
-  error => {
-    if (error.response) {
-      const message = error.response.data?.error || \'请求失败\'
-      return Promise.reject(new Error(message))
-    }
-    return Promise.reject(error)
-  }
-)
-
-// 用户相关API
-export const login = (data) => api.post(\'/users/login\', data)
-export const register = (data) => api.post(\'/users/register\', data)
-
-// 商品相关API
-export const getProducts = () => api.get(\'/products\')
-export const getShopProducts = (shopId) => api.get(`/products/shop/${shopId}`)
-
-// 订单相关API
-export const createOrder = (data) => api.post(\'/orders\', data)
-export const getUserOrders = (userId) => api.get(`/orders/user/${userId}`)
-
-export default api'
-);
-
-
--- 用户模块测试用例
-INSERT INTO test_cases (requirement_id, input_data, expected_output, type) VALUES
-(1, '{"phone": "13800138000", "password": "Test@123"}', '{"token": "[JWT_TOKEN]", "user": {"phone": "13800138000"}}', '用户登录测试'),
-(1, '{"name": "测试用户", "phone": "13800138001", "password": "Test@123"}', '{"id": 1, "phone": "13800138001"}', '用户注册测试'),
-(1, '{"phone": "13800138000", "password": "wrong"}', '{"error": "Invalid phone or password"}', '登录失败测试');
-
--- 商品模块测试用例
-INSERT INTO test_cases (requirement_id, input_data, expected_output, type) VALUES
-(1, '{}', '[{"id": 1, "name": "水煮鱼", "price": 68.00}]', '商品列表测试'),
-(1, '{"shop_id": 1}', '[{"id": 1, "name": "水煮鱼", "price": 68.00}]', '店铺商品测试');
-
--- 订单模块测试用例
-INSERT INTO test_cases (requirement_id, input_data, expected_output, type) VALUES
-(1, '{"user_id": 1, "shop_id": 1, "items": [{"product_id": 1, "quantity": 2}]}', '{"status": "pending", "total": 136.00}', '创建订单测试'),
-(1, '{"user_id": 999}', '{"error": "User not found"}', '无效用户订单测试');
-
-
-
--- 成功部署记录
-INSERT INTO deployment_logs (architecture_id, status, log_output) VALUES
-(3, 'success', '2023-11-15 10:00:01 - 开始部署
-2023-11-15 10:02:30 - 前端构建完成
-2023-11-15 10:05:15 - 后端服务启动
-2023-11-15 10:06:00 - 数据库迁移完成
-2023-11-15 10:06:30 - 部署成功');
-
--- 失败部署记录
-INSERT INTO deployment_logs (architecture_id, status, log_output) VALUES
-(3, 'failed', '2023-11-14 15:30:00 - 开始部署
-2023-11-14 15:31:45 - 前端构建失败
-ERROR: Module not found: Error: Can''t resolve ''element-plus''');
-
--- 进行中的部署
-INSERT INTO deployment_logs (architecture_id, status, log_output) VALUES
-(3, 'running', '2023-11-16 09:00:00 - 开始部署
-2023-11-16 09:01:20 - 正在构建前端...');
-
-
-
--- 用户模块版本历史
-INSERT INTO version_history (entity_type, entity_id, version, data_snapshot) VALUES
-('module_code', 1, 1, '{"content": "初始用户模型", "changes": "基础用户表结构"}'),
-('module_code', 1, 2, '{"content": "添加密码加密", "changes": "增加set_password方法"}'),
-('module_code', 1, 3, '{"content": "添加手机验证", "changes": "增加手机格式校验"}');
-
--- 订单模块版本历史
-INSERT INTO version_history (entity_type, entity_id, version, data_snapshot) VALUES
-('module_code', 3, 1, '{"content": "基础订单模型", "changes": "创建orders表"}'),
-('module_code', 3, 2, '{"content": "添加状态枚举", "changes": "增加5种订单状态"}'),
-('module_code', 3, 3, '{"content": "添加价格计算", "changes": "自动计算订单总价"}');
-
--- 数据库设计版本历史
-INSERT INTO version_history (entity_type, entity_id, version, data_snapshot) VALUES
-('database_design', 1, 1, '{"schema": "基础5表结构", "changes": "初始版本"}'),
-('database_design', 1, 2, '{"schema": "添加索引", "changes": "优化查询性能"}'),
-('database_design', 1, 3, '{"schema": "添加示例数据", "changes": "便于开发测试"}');
+/*
+ Navicat Premium Dump SQL
+
+ Source Server         : localhost_3306_1
+ Source Server Type    : MySQL
+ Source Server Version : 80300 (8.3.0)
+ Source Host           : localhost:3306
+ Source Schema         : autochat
+
+ Target Server Type    : MySQL
+ Target Server Version : 80300 (8.3.0)
+ File Encoding         : 65001
+
+ Date: 09/06/2025 18:00:09
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for architectures
+-- ----------------------------
+DROP TABLE IF EXISTS `architectures`;
+CREATE TABLE `architectures`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `requirement_id` int NOT NULL,
+  `architecture_json` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `generated_by` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `requirement_id`(`requirement_id` ASC) USING BTREE,
+  CONSTRAINT `architectures_ibfk_1` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of architectures
+-- ----------------------------
+INSERT INTO `architectures` VALUES (3, 1, '{\r\n    \"architectureDiagram\": {\r\n        \"description\": \"外卖系统三层架构\",\r\n        \"diagram\": \"┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐\\n│     前端        │    │     后端        │    │     数据库      │\\n│  (Vue.js)      │───▶│  (Flask)       │───▶│  (MySQL)       │\\n└─────────────────┘    └─────────────────┘    └─────────────────┘\\n        ▲                      ▲                      ▲\\n        │                      │                      │\\n┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐\\n│   用户浏览器    │    │     API调用     │    │   数据存储      │\\n└─────────────────┘    └─────────────────┘    └─────────────────┘\"\r\n    },\r\n    \"technologyStack\": {\r\n        \"frontend\": \"Vue 3 + Pinia + Element UI\",\r\n        \"backend\": \"Python Flask + Flask-RESTful\",\r\n        \"database\": \"MySQL 8.0\"\r\n    },\r\n    \"modules\": [\r\n        \"用户模块 (注册/登录/管理)\",\r\n        \"商品模块 (菜单/分类/搜索)\",\r\n        \"订单模块 (购物车/支付/流程)\",\r\n        \"配送模块 (骑手分配/追踪)\"\r\n    ]\r\n}\r\n', 'admin', '2025-06-09 15:17:17');
+
+-- ----------------------------
+-- Table structure for database_designs
+-- ----------------------------
+DROP TABLE IF EXISTS `database_designs`;
+CREATE TABLE `database_designs`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `requirement_id` int NOT NULL,
+  `erd_diagram` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `sql_script` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `requirement_id`(`requirement_id` ASC) USING BTREE,
+  CONSTRAINT `database_designs_ibfk_1` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of database_designs
+-- ----------------------------
+INSERT INTO `database_designs` VALUES (2, 1, 'plaintext\n    +-------------+       +-------------+       +-------------+\n    |    User     |       |  Product    |       |    Order    |\n    +-------------+       +-------------+       +-------------+\n    | id (PK)     |       | id (PK)     |       | id (PK)     |\n    | name        |       | shop_id (FK)|       | user_id (FK)|\n    | phone       |       | name        |       | shop_id (FK)|\n    | password    |       | price       |       | status      |\n    +-------------+       +-------------+       | total       |\n          |                     |              | created_at  |\n          |                     |              +-------------+\n          |                     |                    |\n          |                     +----------+         |\n          |                                |         |\n          v                                v         v\n    +--------------------------+-----------------------------+\n    |         OrderItem        |         Shop               |\n    +--------------------------+-----------------------------+\n    | order_id (PK,FK)         | id (PK)                    |\n    | product_id (PK,FK)       | name                       |\n    | quantity                 | address                    |\n    | price_at_order           +-----------------------------+\n    +--------------------------+', '-- 外卖系统核心数据库设计\n    CREATE TABLE users (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        name VARCHAR(50) NOT NULL,\n        phone VARCHAR(20) NOT NULL UNIQUE,\n        password VARCHAR(100) NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n        INDEX idx_user_phone (phone)\n    );\n    \n    CREATE TABLE shops (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        name VARCHAR(50) NOT NULL,\n        address VARCHAR(200),\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n    );\n    \n    CREATE TABLE products (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        shop_id INT NOT NULL,\n        name VARCHAR(100) NOT NULL,\n        price DECIMAL(10,2) NOT NULL,\n        description TEXT,\n        FOREIGN KEY (shop_id) REFERENCES shops(id),\n        INDEX idx_shop_product (shop_id)\n    );\n    \n    CREATE TABLE orders (\n        id INT PRIMARY KEY AUTO_INCREMENT,\n        user_id INT NOT NULL,\n        shop_id INT NOT NULL,\n        status ENUM(\'pending\', \'preparing\', \'delivering\', \'completed\', \'cancelled\') DEFAULT \'pending\',\n        total DECIMAL(10,2) NOT NULL,\n        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\n        FOREIGN KEY (user_id) REFERENCES users(id),\n        FOREIGN KEY (shop_id) REFERENCES shops(id),\n        INDEX idx_order_user (user_id),\n        INDEX idx_order_shop (shop_id),\n        INDEX idx_order_status (status)\n    );\n    \n    CREATE TABLE order_items (\n        order_id INT NOT NULL,\n        product_id INT NOT NULL,\n        quantity INT NOT NULL DEFAULT 1,\n        price_at_order DECIMAL(10,2) NOT NULL,\n        PRIMARY KEY (order_id, product_id),\n        FOREIGN KEY (order_id) REFERENCES orders(id),\n        FOREIGN KEY (product_id) REFERENCES products(id)\n    );\n    \n    -- 初始化示例数据\n    INSERT INTO shops (name, address) VALUES \n    (\'川湘阁\', \'科技园路101号\'),\n    (\'粤式茶餐厅\', \'中山北路202号\');\n    \n    INSERT INTO products (shop_id, name, price, description) VALUES\n    (1, \'水煮鱼\', 68.00, \'招牌川菜，麻辣鲜香\'),\n    (1, \'回锅肉\', 48.00, \'传统川味，肥而不腻\'),\n    (2, \'虾饺皇\', 28.00, \'广式早茶经典\'),\n    (2, \'干炒牛河\', 32.00, \'粤式招牌主食\');', '2025-06-09 15:17:41');
+
+-- ----------------------------
+-- Table structure for deployment_logs
+-- ----------------------------
+DROP TABLE IF EXISTS `deployment_logs`;
+CREATE TABLE `deployment_logs`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `architecture_id` int NOT NULL,
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `log_output` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `executed_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `architecture_id`(`architecture_id` ASC) USING BTREE,
+  CONSTRAINT `deployment_logs_ibfk_1` FOREIGN KEY (`architecture_id`) REFERENCES `architectures` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of deployment_logs
+-- ----------------------------
+INSERT INTO `deployment_logs` VALUES (1, 3, 'success', '2023-11-15 10:00:01 - 开始部署\n2023-11-15 10:02:30 - 前端构建完成\n2023-11-15 10:05:15 - 后端服务启动\n2023-11-15 10:06:00 - 数据库迁移完成\n2023-11-15 10:06:30 - 部署成功', '2025-06-09 15:20:50');
+INSERT INTO `deployment_logs` VALUES (2, 3, 'failed', '2023-11-14 15:30:00 - 开始部署\n2023-11-14 15:31:45 - 前端构建失败\nERROR: Module not found: Error: Can\'t resolve \'element-plus\'', '2025-06-09 15:20:50');
+INSERT INTO `deployment_logs` VALUES (3, 3, 'running', '2023-11-16 09:00:00 - 开始部署\n2023-11-16 09:01:20 - 正在构建前端...', '2025-06-09 15:20:50');
+
+-- ----------------------------
+-- Table structure for module_codes
+-- ----------------------------
+DROP TABLE IF EXISTS `module_codes`;
+CREATE TABLE `module_codes`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `architecture_id` int NOT NULL,
+  `module_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `language` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `code` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `architecture_id`(`architecture_id` ASC) USING BTREE,
+  CONSTRAINT `module_codes_ibfk_1` FOREIGN KEY (`architecture_id`) REFERENCES `architectures` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of module_codes
+-- ----------------------------
+INSERT INTO `module_codes` VALUES (2, 3, '用户模块', 'Python', 'from app.extensions import db\nfrom werkzeug.security import generate_password_hash, check_password_hash\n\nclass User(db.Model):\n    __tablename__ = \'users\'\n    id = db.Column(db.Integer, primary_key=True)\n    name = db.Column(db.String(50), nullable=False)\n    phone = db.Column(db.String(20), unique=True, nullable=False)\n    password = db.Column(db.String(100), nullable=False)\n    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())\n\n    def set_password(self, password):\n        self.password = generate_password_hash(password)\n\n    def check_password(self, password):\n        return check_password_hash(self.password, password)\n\n    def to_dict(self):\n        return {\n            \'id\': self.id,\n            \'name\': self.name,\n            \'phone\': self.phone,\n            \'created_at\': self.created_at.isoformat()\n        }', '2025-06-09 15:18:55');
+INSERT INTO `module_codes` VALUES (4, 3, '用户模块', 'Python', 'from flask import Blueprint, request, jsonify\nfrom werkzeug.security import generate_password_hash\nfrom app.models.user import User\nfrom app.extensions import db\n\nbp = Blueprint(\'user\', __name__, url_prefix=\'/api/users\')\n\n@bp.route(\'/register\', methods=[\'POST\'])\ndef register():\n    data = request.get_json()\n    if User.query.filter_by(phone=data[\'phone\']).first():\n        return jsonify({\'error\': \'Phone already registered\'}), 400\n    \n    user = User(\n        name=data[\'name\'],\n        phone=data[\'phone\'],\n    )\n    user.set_password(data[\'password\'])\n    db.session.add(user)\n    db.session.commit()\n    return jsonify(user.to_dict()), 201\n\n@bp.route(\'/login\', methods=[\'POST\'])\ndef login():\n    data = request.get_json()\n    user = User.query.filter_by(phone=data[\'phone\']).first()\n    if not user or not user.check_password(data[\'password\']):\n        return jsonify({\'error\': \'Invalid phone or password\'}), 401\n    \n    return jsonify({\n        \'user\': user.to_dict(),\n        \'token\': \'generated_jwt_token\'  # 实际项目应实现JWT\n    })', '2025-06-09 15:19:18');
+INSERT INTO `module_codes` VALUES (5, 3, '用户模块', 'Vue.js', '<template>\n  <div class=\"login-container\">\n    <el-form :model=\"form\" :rules=\"rules\" ref=\"loginForm\" class=\"login-form\">\n      <h2 class=\"title\">外卖系统登录</h2>\n      <el-form-item prop=\"phone\">\n        <el-input v-model=\"form.phone\" placeholder=\"手机号\"></el-input>\n      </el-form-item>\n      <el-form-item prop=\"password\">\n        <el-input v-model=\"form.password\" type=\"password\" placeholder=\"密码\"></el-input>\n      </el-form-item>\n      <el-button type=\"primary\" @click=\"handleLogin\" class=\"login-btn\">登录</el-button>\n      <div class=\"register-link\">\n        没有账号？<router-link to=\"/register\">立即注册</router-link>\n      </div>\n    </el-form>\n  </div>\n</template>\n\n<script setup>\nimport { ref } from \'vue\'\nimport { useRouter } from \'vue-router\'\nimport { ElMessage } from \'element-plus\'\nimport { login } from \'@/api/user\'\n\nconst router = useRouter()\nconst form = ref({ phone: \'\', password: \'\' })\nconst rules = {\n  phone: [{ required: true, message: \'请输入手机号\', trigger: \'blur\' }],\n  password: [{ required: true, message: \'请输入密码\', trigger: \'blur\' }]\n}\n\nconst handleLogin = async () => {\n  try {\n    const res = await login(form.value)\n    localStorage.setItem(\'token\', res.token)\n    ElMessage.success(\'登录成功\')\n    router.push(\'/products\')\n  } catch (error) {\n    ElMessage.error(error.message)\n  }\n}\n</script>\n\n<style scoped>\n.login-container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n  background-color: #f5f5f5;\n}\n.login-form {\n  width: 400px;\n  padding: 40px;\n  background: #fff;\n  border-radius: 8px;\n  box-shadow: 0 0 20px rgba(0,0,0,0.1);\n}\n.title {\n  margin-bottom: 30px;\n  text-align: center;\n  color: #333;\n}\n.login-btn {\n  width: 100%;\n  margin-top: 20px;\n}\n.register-link {\n  margin-top: 15px;\n  text-align: center;\n  font-size: 14px;\n}\n</style>', '2025-06-09 15:19:18');
+INSERT INTO `module_codes` VALUES (6, 3, '商品模块', 'Python', 'from app.extensions import db\n\nclass Product(db.Model):\n    __tablename__ = \'products\'\n    id = db.Column(db.Integer, primary_key=True)\n    shop_id = db.Column(db.Integer, db.ForeignKey(\'shops.id\'), nullable=False)\n    name = db.Column(db.String(100), nullable=False)\n    price = db.Column(db.Numeric(10,2), nullable=False)\n    description = db.Column(db.Text)\n    \n    shop = db.relationship(\'Shop\', backref=\'products\')\n\n    def to_dict(self):\n        return {\n            \'id\': self.id,\n            \'shop_id\': self.shop_id,\n            \'name\': self.name,\n            \'price\': float(self.price),\n            \'description\': self.description\n        }', '2025-06-09 15:19:25');
+INSERT INTO `module_codes` VALUES (7, 3, '商品模块', 'Python', 'from flask import Blueprint, jsonify\nfrom app.models.product import Product\n\nbp = Blueprint(\'product\', __name__, url_prefix=\'/api/products\')\n\n@bp.route(\'/\', methods=[\'GET\'])\ndef get_products():\n    products = Product.query.all()\n    return jsonify([p.to_dict() for p in products])\n\n@bp.route(\'/shop/<int:shop_id>\', methods=[\'GET\'])\ndef get_shop_products(shop_id):\n    products = Product.query.filter_by(shop_id=shop_id).all()\n    return jsonify([p.to_dict() for p in products])', '2025-06-09 15:19:32');
+INSERT INTO `module_codes` VALUES (8, 3, '商品模块', 'Vue.js', '<template>\n  <div class=\"product-container\">\n    <el-row :gutter=\"20\">\n      <el-col :span=\"6\" v-for=\"product in products\" :key=\"product.id\">\n        <el-card class=\"product-card\">\n          <div class=\"product-image\">\n            <img :src=\"product.image || \'https://via.placeholder.com/150\'\" alt=\"商品图片\">\n          </div>\n          <h3 class=\"product-name\">{{ product.name }}</h3>\n          <p class=\"product-price\">¥{{ product.price.toFixed(2) }}</p>\n          <p class=\"product-desc\">{{ product.description }}</p>\n          <el-button type=\"primary\" @click=\"addToCart(product)\">加入购物车</el-button>\n        </el-card>\n      </el-col>\n    </el-row>\n  </div>\n</template>\n\n<script setup>\nimport { ref, onMounted } from \'vue\'\nimport { getProducts } from \'@/api/product\'\nimport { ElMessage } from \'element-plus\'\n\nconst products = ref([])\nconst cart = ref([])\n\nonMounted(async () => {\n  try {\n    const res = await getProducts()\n    products.value = res.data\n  } catch (error) {\n    ElMessage.error(\'获取商品列表失败\')\n  }\n})\n\nconst addToCart = (product) => {\n  cart.value.push(product)\n  ElMessage.success(\'已添加到购物车\')\n}\n</script>\n\n<style scoped>\n.product-container {\n  padding: 20px;\n}\n.product-card {\n  margin-bottom: 20px;\n  height: 100%;\n}\n.product-image img {\n  width: 100%;\n  height: 150px;\n  object-fit: cover;\n}\n.product-name {\n  font-size: 16px;\n  margin: 10px 0;\n}\n.product-price {\n  color: #f56c6c;\n  font-weight: bold;\n  margin: 10px 0;\n}\n.product-desc {\n  color: #909399;\n  font-size: 12px;\n  margin-bottom: 15px;\n}\n</style>', '2025-06-09 15:19:42');
+INSERT INTO `module_codes` VALUES (9, 3, '订单模块', 'Python', 'from datetime import datetime\nfrom app.extensions import db\n\nclass Order(db.Model):\n    __tablename__ = \'orders\'\n    id = db.Column(db.Integer, primary_key=True)\n    user_id = db.Column(db.Integer, db.ForeignKey(\'users.id\'), nullable=False)\n    shop_id = db.Column(db.Integer, db.ForeignKey(\'shops.id\'), nullable=False)\n    status = db.Column(db.String(20), default=\'pending\')\n    total = db.Column(db.Numeric(10,2), nullable=False)\n    created_at = db.Column(db.DateTime, default=datetime.utcnow)\n    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)\n    \n    user = db.relationship(\'User\', backref=\'orders\')\n    shop = db.relationship(\'Shop\', backref=\'orders\')\n    items = db.relationship(\'OrderItem\', backref=\'order\', lazy=\'dynamic\')\n\n    def to_dict(self):\n        return {\n            \'id\': self.id,\n            \'user_id\': self.user_id,\n            \'shop_id\': self.shop_id,\n            \'status\': self.status,\n            \'total\': float(self.total),\n            \'created_at\': self.created_at.isoformat(),\n            \'items\': [item.to_dict() for item in self.items]\n        }', '2025-06-09 15:19:48');
+INSERT INTO `module_codes` VALUES (10, 3, '订单模块', 'Python', 'from flask import Blueprint, request, jsonify\nfrom app.models.order import Order, OrderItem\nfrom app.models.product import Product\nfrom app.extensions import db\nfrom datetime import datetime\n\nbp = Blueprint(\'order\', __name__, url_prefix=\'/api/orders\')\n\n@bp.route(\'/\', methods=[\'POST\'])\ndef create_order():\n    data = request.get_json()\n    \n    # 计算总价\n    total = sum(item[\'price\'] * item[\'quantity\'] for item in data[\'items\'])\n    \n    order = Order(\n        user_id=data[\'user_id\'],\n        shop_id=data[\'shop_id\'],\n        total=total,\n        status=\'pending\'\n    )\n    db.session.add(order)\n    db.session.flush()  # 获取order.id\n    \n    # 添加订单项\n    for item in data[\'items\']:\n        product = Product.query.get(item[\'product_id\'])\n        order_item = OrderItem(\n            order_id=order.id,\n            product_id=product.id,\n            quantity=item[\'quantity\'],\n            price_at_order=product.price\n        )\n        db.session.add(order_item)\n    \n    db.session.commit()\n    return jsonify(order.to_dict()), 201\n\n@bp.route(\'/user/<int:user_id>\', methods=[\'GET\'])\ndef get_user_orders(user_id):\n    orders = Order.query.filter_by(user_id=user_id).order_by(Order.created_at.desc()).all()\n    return jsonify([o.to_dict() for o in orders])', '2025-06-09 15:19:55');
+INSERT INTO `module_codes` VALUES (11, 3, '订单模块', 'Vue.js', '<template>\n  <div class=\"order-create\">\n    <el-steps :active=\"active\" finish-status=\"success\">\n      <el-step title=\"选择商品\"></el-step>\n      <el-step title=\"确认订单\"></el-step>\n      <el-step title=\"完成支付\"></el-step>\n    </el-steps>\n    \n    <div v-if=\"active === 0\" class=\"step-content\">\n      <product-list @add-to-cart=\"addToCart\"></product-list>\n    </div>\n    \n    <div v-if=\"active === 1\" class=\"step-content\">\n      <el-table :data=\"cartItems\" style=\"width: 100%\">\n        <el-table-column prop=\"name\" label=\"商品\"></el-table-column>\n        <el-table-column prop=\"price\" label=\"单价\" width=\"120\"></el-table-column>\n        <el-table-column prop=\"quantity\" label=\"数量\" width=\"120\">\n          <template #default=\"{row}\">\n            <el-input-number v-model=\"row.quantity\" :min=\"1\"></el-input-number>\n          </template>\n        </el-table-column>\n        <el-table-column label=\"小计\" width=\"120\">\n          <template #default=\"{row}\">¥{{ (row.price * row.quantity).toFixed(2) }}</template>\n        </el-table-column>\n      </el-table>\n      <div class=\"total-price\">\n        总计：¥{{ totalPrice.toFixed(2) }}\n      </div>\n    </div>\n    \n    <div v-if=\"active === 2\" class=\"step-content\">\n      <el-result icon=\"success\" title=\"订单提交成功\">\n        <template #extra>\n          <el-button type=\"primary\" @click=\"goToOrders\">查看订单</el-button>\n        </template>\n      </el-result>\n    </div>\n    \n    <div class=\"action-buttons\">\n      <el-button v-if=\"active > 0\" @click=\"prev\">上一步</el-button>\n      <el-button v-if=\"active < 2\" type=\"primary\" @click=\"next\">下一步</el-button>\n    </div>\n  </div>\n</template>\n\n<script setup>\nimport { ref, computed } from \'vue\'\nimport { useRouter } from \'vue-router\'\nimport { ElMessage } from \'element-plus\'\nimport { createOrder } from \'@/api/order\'\nimport ProductList from \'@/views/Product/List.vue\'\n\nconst router = useRouter()\nconst active = ref(0)\nconst cartItems = ref([])\n\nconst totalPrice = computed(() => {\n  return cartItems.value.reduce((sum, item) => sum + item.price * item.quantity, 0)\n})\n\nconst addToCart = (product) => {\n  const existItem = cartItems.value.find(item => item.id === product.id)\n  if (existItem) {\n    existItem.quantity += 1\n  } else {\n    cartItems.value.push({ ...product, quantity: 1 })\n  }\n}\n\nconst next = async () => {\n  if (active.value === 1) {\n    try {\n      const orderData = {\n        user_id: 1, // 实际项目中从登录状态获取\n        shop_id: 1, // 实际项目中根据选择获取\n        items: cartItems.value.map(item => ({\n          product_id: item.id,\n          quantity: item.quantity,\n          price: item.price\n        }))\n      }\n      await createOrder(orderData)\n      active.value++\n    } catch (error) {\n      ElMessage.error(\'创建订单失败\')\n    }\n  } else {\n    active.value++\n  }\n}\n\nconst prev = () => {\n  active.value--\n}\n\nconst goToOrders = () => {\n  router.push(\'/orders\')\n}\n</script>\n\n<style scoped>\n.order-create {\n  padding: 20px;\n}\n.step-content {\n  margin: 30px 0;\n}\n.total-price {\n  margin-top: 20px;\n  text-align: right;\n  font-size: 18px;\n  font-weight: bold;\n}\n.action-buttons {\n  margin-top: 20px;\n  text-align: center;\n}\n</style>', '2025-06-09 15:20:05');
+INSERT INTO `module_codes` VALUES (12, 3, 'API客户端', 'JavaScript', 'import axios from \'axios\'\n\nconst api = axios.create({\n  baseURL: process.env.VUE_APP_API_URL || \'/api\',\n  timeout: 10000\n})\n\n// 请求拦截器\napi.interceptors.request.use(config => {\n  const token = localStorage.getItem(\'token\')\n  if (token) {\n    config.headers.Authorization = `Bearer ${token}`\n  }\n  return config\n})\n\n// 响应拦截器\napi.interceptors.response.use(\n  response => response.data,\n  error => {\n    if (error.response) {\n      const message = error.response.data?.error || \'请求失败\'\n      return Promise.reject(new Error(message))\n    }\n    return Promise.reject(error)\n  }\n)\n\n// 用户相关API\nexport const login = (data) => api.post(\'/users/login\', data)\nexport const register = (data) => api.post(\'/users/register\', data)\n\n// 商品相关API\nexport const getProducts = () => api.get(\'/products\')\nexport const getShopProducts = (shopId) => api.get(`/products/shop/${shopId}`)\n\n// 订单相关API\nexport const createOrder = (data) => api.post(\'/orders\', data)\nexport const getUserOrders = (userId) => api.get(`/orders/user/${userId}`)\n\nexport default api', '2025-06-09 15:20:14');
+
+-- ----------------------------
+-- Table structure for requirements
+-- ----------------------------
+DROP TABLE IF EXISTS `requirements`;
+CREATE TABLE `requirements`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` datetime NULL DEFAULT (now()),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of requirements
+-- ----------------------------
+INSERT INTO `requirements` VALUES (1, 2, '外卖系统', '1', '外卖系统需求文档\n1. 项目概述\n本项目旨在开发一个功能完善的外卖系统，实现用户在线下单、商家接单、骑手配送以及订单管理的完整流程。系统应具备良好的用户体验、高效的订单处理能力和稳定的安全性。\n\n2. 用户角色\n用户：浏览菜单、下单、支付、查看订单状态、评价订单。\n商家：管理菜单、接收订单、处理订单、查看订单历史。\n骑手：接收配送任务、查看配送路线、更新订单状态、查看收入。\n管理员：管理系统设置、用户管理、商家管理、骑手管理、数据统计。\n3. 功能模块\n3.1 用户模块\n3.1.1 用户注册与登录\n支持手机号、邮箱注册和登录。\n支持第三方账号（如微信、支付宝）登录。\n忘记密码功能，通过手机号或邮箱重置密码。\n3.1.2 浏览菜单\n按分类浏览商家和菜品。\n搜索商家和菜品。\n查看菜品详情，包括图片、价格、描述等。\n查看商家详情，包括地址、营业时间、评分、评价等。\n3.1.3 下单\n选择菜品、规格、数量，加入购物车。\n填写配送地址、联系方式、备注等信息。\n选择支付方式（如支付宝、微信支付、银行卡支付等）。\n使用优惠券、红包等优惠活动。\n确认订单并支付。\n3.1.4 订单管理\n查看订单状态（待支付、已接单、配送中、已完成、已取消等）。\n查看订单详情，包括菜品信息、价格、配送费、优惠信息等。\n取消订单（在商家接单前可取消）。\n催单。\n确认收货。\n评价订单和商家。\n3.2 商家模块\n3.2.1 商家注册与登录\n商家注册需审核，包括营业执照、餐饮服务许可证等信息。\n商家登录后可管理店铺信息。\n3.2.2 菜单管理\n添加、编辑、删除菜品。\n设置菜品分类、规格、价格、图片、描述等信息。\n设置菜品库存。\n3.2.3 订单管理\n实时接收新订单通知。\n查看订单详情，包括菜品信息、用户信息、配送地址等。\n接单、拒绝订单。\n打印订单小票。\n查看订单历史。\n3.2.4 数据统计\n查看店铺营业额、订单量、用户评价等数据。\n导出数据报表。\n3.3 骑手模块\n3.3.1 骑手注册与登录\n骑手注册需审核，包括身份证、健康证等信息。\n骑手登录后可接收配送任务。\n3.3.2 配送任务\n查看可接单的配送任务。\n接受或拒绝配送任务。\n查看配送路线和导航。\n更新订单状态（已取餐、配送中、已送达）。\n3.3.3 收入管理\n查看配送收入。\n提现。\n3.4 订单管理模块\n3.4.1 订单状态管理\n系统自动更新订单状态，包括待支付、已接单、配送中、已完成、已取消等。\n用户、商家、骑手可查看订单状态。\n3.4.2 订单分配\n系统根据算法自动分配订单给合适的骑手。\n管理员可手动分配订单。\n3.4.3 订单跟踪\n用户、商家、骑手可实时跟踪订单位置和状态。\n3.5 管理员模块\n3.5.1 系统设置\n管理系统参数，如配送费、起送价、服务费率等。\n管理支付方式。\n3.5.2 用户管理\n查看用户信息。\n禁用或删除用户账号。\n3.5.3 商家管理\n审核商家注册信息。\n查看商家信息。\n禁用或删除商家账号。\n3.5.4 骑手管理\n审核骑手注册信息。\n查看骑手信息。\n禁用或删除骑手账号。\n3.5.5 数据统计\n查看系统整体数据，如订单量、营业额、用户数、商家数、骑手数等。\n导出数据报表。\n4. 技术要求\n前端：Vue.js、HTML5、CSS3、JavaScript。\n后端：Node.js、Express、MongoDB。\n支付接口：支付宝、微信支付。\n地图服务：高德地图或百度地图。\n推送服务：极光推送或个推。\n5. 安全要求\n用户密码加密存储。\n支付接口安全认证。\n数据传输加密。\n防止SQL注入、XSS攻击等安全漏洞。\n6. 性能要求\n系统响应时间小于2秒。\n高并发处理能力，支持1000+并发用户。\n数据库读写性能优化。\n7. 部署与运维\n支持云服务器部署，如阿里云、腾讯云等。\n监控系统运行状态，包括服务器负载、数据库性能等。\n定期备份数据库。\n8. 测试要求\n功能测试：覆盖所有功能模块。\n性能测试：模拟高并发场景。\n安全测试：检测安全漏洞。\n兼容性测试：支持主流浏览器和移动设备。\n9. 项目时间表\n需求分析：2周\n设计阶段：2周\n开发阶段：8周\n测试阶段：2周\n部署上线：1周\n总计：15周\n10. 团队组成\n项目经理：1人\n前端开发工程师：2人\n后端开发工程师：2人\n测试工程师：1人\nUI设计师：1人\n11. 预算\n人力成本：根据团队组成和市场行情估算\n服务器成本：根据部署方案估算\n第三方服务成本：支付接口、地图服务、推送服务等\n总预算：根据各项成本汇总', '2023-11-03 14:20:00');
+
+-- ----------------------------
+-- Table structure for test_cases
+-- ----------------------------
+DROP TABLE IF EXISTS `test_cases`;
+CREATE TABLE `test_cases`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `requirement_id` int NOT NULL,
+  `input_data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `expected_output` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `requirement_id`(`requirement_id` ASC) USING BTREE,
+  CONSTRAINT `test_cases_ibfk_1` FOREIGN KEY (`requirement_id`) REFERENCES `requirements` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of test_cases
+-- ----------------------------
+INSERT INTO `test_cases` VALUES (1, 1, '{\"phone\": \"13800138000\", \"password\": \"Test@123\"}', '{\"token\": \"[JWT_TOKEN]\", \"user\": {\"phone\": \"13800138000\"}}', '用户登录测试', '2025-06-09 15:20:50');
+INSERT INTO `test_cases` VALUES (2, 1, '{\"name\": \"测试用户\", \"phone\": \"13800138001\", \"password\": \"Test@123\"}', '{\"id\": 1, \"phone\": \"13800138001\"}', '用户注册测试', '2025-06-09 15:20:50');
+INSERT INTO `test_cases` VALUES (3, 1, '{\"phone\": \"13800138000\", \"password\": \"wrong\"}', '{\"error\": \"Invalid phone or password\"}', '登录失败测试', '2025-06-09 15:20:50');
+INSERT INTO `test_cases` VALUES (4, 1, '{}', '[{\"id\": 1, \"name\": \"水煮鱼\", \"price\": 68.00}]', '商品列表测试', '2025-06-09 15:20:50');
+INSERT INTO `test_cases` VALUES (5, 1, '{\"shop_id\": 1}', '[{\"id\": 1, \"name\": \"水煮鱼\", \"price\": 68.00}]', '店铺商品测试', '2025-06-09 15:20:50');
+INSERT INTO `test_cases` VALUES (6, 1, '{\"user_id\": 1, \"shop_id\": 1, \"items\": [{\"product_id\": 1, \"quantity\": 2}]}', '{\"status\": \"pending\", \"total\": 136.00}', '创建订单测试', '2025-06-09 15:20:50');
+INSERT INTO `test_cases` VALUES (7, 1, '{\"user_id\": 999}', '{\"error\": \"User not found\"}', '无效用户订单测试', '2025-06-09 15:20:50');
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password_hash` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `username`(`username` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (1, 'name', 'scrypt:32768:8:1$6WSLk9yWmSYLptvu$501bf89dc4132f5ea18853b8125a7e242fc06d520f3f4c65695398cb96b5d46b72ec526f2b3e58bb3210e44c21d7c96c02086e7c37614c3bfca6f44fbb72f56e');
+
+-- ----------------------------
+-- Table structure for version_history
+-- ----------------------------
+DROP TABLE IF EXISTS `version_history`;
+CREATE TABLE `version_history`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `entity_type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `entity_id` int NOT NULL,
+  `version` int NOT NULL,
+  `data_snapshot` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of version_history
+-- ----------------------------
+INSERT INTO `version_history` VALUES (1, 'module_code', 1, 1, '{\"content\": \"初始用户模型\", \"changes\": \"基础用户表结构\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (2, 'module_code', 1, 2, '{\"content\": \"添加密码加密\", \"changes\": \"增加set_password方法\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (3, 'module_code', 1, 3, '{\"content\": \"添加手机验证\", \"changes\": \"增加手机格式校验\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (4, 'module_code', 3, 1, '{\"content\": \"基础订单模型\", \"changes\": \"创建orders表\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (5, 'module_code', 3, 2, '{\"content\": \"添加状态枚举\", \"changes\": \"增加5种订单状态\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (6, 'module_code', 3, 3, '{\"content\": \"添加价格计算\", \"changes\": \"自动计算订单总价\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (7, 'database_design', 1, 1, '{\"schema\": \"基础5表结构\", \"changes\": \"初始版本\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (8, 'database_design', 1, 2, '{\"schema\": \"添加索引\", \"changes\": \"优化查询性能\"}', '2025-06-09 15:20:50');
+INSERT INTO `version_history` VALUES (9, 'database_design', 1, 3, '{\"schema\": \"添加示例数据\", \"changes\": \"便于开发测试\"}', '2025-06-09 15:20:50');
+
+SET FOREIGN_KEY_CHECKS = 1;
