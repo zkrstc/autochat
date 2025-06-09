@@ -2,7 +2,7 @@ from flask import Flask, jsonify,request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.exceptions import BadRequest, NotFound
-
+from flask import jsonify
 from werkzeug.security import check_password_hash
 from datetime import datetime
 import os
@@ -224,7 +224,7 @@ def get_architecture(requirement_id):
             'error': 'Architecture not found',
             'status': 404
         }), 404
-    print(architecture.architecture_json)
+    
     import json
 
     try:
@@ -329,6 +329,50 @@ def generate_architecture():
         db.session.rollback()
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+
+# 新增API端点：通过requirement_id获取architecture
+@app.route('/api/architecture/by_requirement/<int:requirement_id>', methods=['GET'])
+def get_architecture_by_requirement(requirement_id):
+    architecture = Architecture.query.filter_by(requirement_id=requirement_id).first()
+    if not architecture:
+        return jsonify({
+            'status': 'error',
+            'message': 'Architecture not found for this requirement'
+        }), 404
+    
+    return jsonify({
+        'status': 'success',
+        'data': {
+            'id': architecture.id,
+            'requirement_id': architecture.requirement_id
+        }
+    })
+
+@app.route('/api/module_code', methods=['GET'])
+def get_module_code():
+    architecture_id = request.args.get('architecture_id')
+    module_name = request.args.get('module_name')
+    print(architecture_id)
+    print(module_name)
+    if not architecture_id or not module_name:
+        return jsonify({'error': 'Missing parameters'}), 400
+    
+    # 查询所有匹配的记录而不仅仅是第一条
+    module_codes = ModuleCode.query.filter_by(
+        architecture_id=architecture_id,
+        module_name=module_name
+    ).all()
+    
+    if not module_codes:
+        return jsonify({'error': 'Module code not found'}), 404
+    
+    # 将结果组合成一个列表返回
+    result = [{
+        'code': module.code,
+        'language': module.language
+    } for module in module_codes]
+    
+    return jsonify(result)
 
 
 @app.route('/api/modules/generate', methods=['POST'])

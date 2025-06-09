@@ -1,19 +1,32 @@
 <template>
   <div class="p-8">
+    <!-- 需求选择 -->
+    <div class="flex items-center justify-between mb-6">
+      <div class="w-1/2 pr-4">
+        <label class="block text-gray-700 mb-2">需求选择：</label>
+        <select v-model="selectedRequirement"
+          class="border border-gray-300 rounded-button px-4 py-2 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-primary"
+          @change="handleRequirementSelected(selectedRequirement)">
+          <option disabled value="">请选择需求</option>
+          <option v-for="req in requirements" :key="req.id" :value="req.id">
+            {{ req.name }} v{{ req.version }}
+          </option>
+        </select>
+      </div>
 
-    <select v-model="selectedRequirementId" @change="onRequirementChange" class="...">
-      <option disabled value="">请选择需求</option>
-      <option v-for="req in requirements" :value="req.id" :key="req.id">
-        {{ req.name }} v{{ req.version }}
-      </option>
-    </select>
-
-    <select @change="onModuleChange" class="...">
-      <option disabled selected>请选择模块</option>
-      <option v-for="mod in modules" :value="mod.id" :key="mod.id">{{ mod.name }}</option>
-    </select>
-
-
+      <!-- 模块选择 -->
+      <div class="w-1/2 pl-4">
+        <label class="block text-gray-700 mb-2">模块选择：</label>
+        <select v-model="selectedModule"
+          class="border border-gray-300 rounded-button px-4 py-2 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-primary"
+          :disabled="!selectedRequirementId" @change="handleModuleSelected(selectedModule)">
+          <option disabled value="">请选择模块</option>
+          <option v-for="module in architectureModules" :key="module" :value="module">
+            {{ module }}
+          </option>
+        </select>
+      </div>
+    </div>
 
     <div class="bg-white rounded-lg shadow p-6">
       <div class="flex items-center justify-between mb-4">
@@ -22,7 +35,7 @@
           <h3 class="ml-2 text-lg font-medium">代码预览</h3>
         </div>
         <div class="flex space-x-2">
-          <button class="px-4 py-2 bg-primary text-white !rounded-button" onclick="copyCode()">
+          <button @click="copyCombinedCode" class="px-4 py-2 bg-primary text-white !rounded-button">
             <i class="far fa-copy mr-2"></i>复制代码
           </button>
           <button class="px-4 py-2 border border-gray-300 !rounded-button">
@@ -30,10 +43,16 @@
           </button>
         </div>
       </div>
-      <pre id="codeBlock" class="..." style="height: 600px;">
-  {{ selectedModuleCode || '// 请选择需求和模块查看代码' }}
-</pre>
 
+      <pre v-if="moduleCodes.length > 0" class="..." style="height: 600px;">
+  <div v-for="(code, index) in moduleCodes" :key="index" class="mb-6">
+    <div class="text-sm text-gray-500 mb-1">// {{ code.language }} 代码</div>
+    <code class="text-left block whitespace-pre">{{ code.code }}</code>
+  </div>
+</pre>
+      <pre v-else class="..." style="height: 600px;">
+        // 请选择需求和模块查看代码
+      </pre>
     </div>
   </div>
 </template>
@@ -46,17 +65,77 @@ export default {
   data() {
     return {
       requirements: [],
-      selectedRequirementId: null,
-      modules: [],
-      selectedModuleCode: ''
+      selectedRequirement: '',
+      selectedRequirementId: '',
+      architecture: null,
+      architectureModules: [],
+      selectedModule: '',
+      moduleCodes: [],
+      loading: false,
+      error: null,
+      selectedArchitectureId: '',
     };
   },
   mounted() {
     this.fetchRequirements();
   },
   methods: {
+    // 选择需求
+    handleRequirementSelected(id) {
+      this.selectedRequirementId = id;
+      this.fetchArchitecture(id);
+      this.resetModuleSelection();
+    },
+    // 获取架构信息
+    async fetchArchitecture(requirementId) {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const response = await axios.get(`http://127.0.0.1:5000/api/architectures/${requirementId}`);
+        if (response.data.status === 'success') {
+          this.architecture = JSON.parse(response.data.data.architecture_json);
+          this.selectedArchitectureId = response.data.data.id;
+          this.architectureModules = this.architecture.modules || [];
+        } else {
+          throw new Error(response.data.message || 'Failed to fetch architecture');
+        }
+      } catch (error) {
+        console.error('Error fetching architecture:', error);
+        this.error = error.message;
+        this.architectureModules = [];
+      } finally {
+        this.loading = false;
+      }
+    },
+    // 选择模块
+    handleModuleSelected(moduleName) {
+      if (!this.selectedRequirementId || !moduleName) return;
+      this.fetchModuleCodes(this.selectedRequirementId, moduleName);
+    },
+    // 获取模块代码
+    async fetchModuleCodes(architectureId, moduleName) {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/api/module_code', {
+          params: {
+            architecture_id: this.selectedArchitectureId,
+            module_name: moduleName
+          }
+        });
+        this.moduleCodes = response.data;
+      } catch (error) {
+        console.error('Error fetching module codes:', error);
+        this.error = error.response?.data?.error || error.message;
+        this.moduleCodes = [];
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchRequirements() {
-      const res = await axios.get('/api/requirements/list');
+      const res = await axios.get('http://127.0.0.1:5000//api/requirements/list');
       this.requirements = res.data;
     },
     async onRequirementChange() {
@@ -73,6 +152,11 @@ export default {
     },
     copyCode() {
       navigator.clipboard.writeText(this.selectedModuleCode);
+    },
+    // 重置模块选择
+    resetModuleSelection() {
+      this.selectedModule = '';
+      this.moduleCodes = [];
     }
   }
 

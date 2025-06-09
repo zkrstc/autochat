@@ -190,12 +190,6 @@ export default {
             this.selectedRequirementId = id;
             console.log('Selected Requirement ID:', this.selectedRequirementId);
             this.fetchArchitecture(this.selectedRequirementId);
-            // // In your component logic or template
-            // if (this.architecture) {
-            //     console.log(this.architecture.architecture_json);
-            // } else {
-            //     console.log('Architecture data is not available.');
-            // }
         },
         async fetchRequirements() {
             this.loading = true;
