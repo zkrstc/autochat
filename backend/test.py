@@ -6,7 +6,7 @@ from werkzeug.exceptions import BadRequest, NotFound
 from werkzeug.security import check_password_hash
 from datetime import datetime
 import os
-
+import json
 import openai
 
 app = Flask(__name__)
