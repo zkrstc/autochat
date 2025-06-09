@@ -1,22 +1,20 @@
 <template>
    <div class="p-8">
-                <div class="flex items-center mb-6 space-x-4">
-                    <div class="text-lg font-medium">需求选择：</div>
-                    <select id="projectSelect"
-                        class="border border-gray-300 rounded-button px-4 py-2 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-primary"
-                        onchange="updateModules()">
-                        <option value="1">智能客服系统 v1.0</option>
-                        <option value="2">数据分析平台 v2.0</option>
-                        <option value="3">企业协同办公系统 v3.0</option>
-                        <option value="4">电商管理平台 v1.5</option>
-                    </select>
-                    <div class="text-lg font-medium ml-8">模块选择：</div>
-                    <select id="moduleSelect"
-                        class="border border-gray-300 rounded-button px-4 py-2 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-primary"
-                        onchange="showCode()">
-                    </select>
-                    
-                </div>
+
+<select v-model="selectedRequirementId" @change="onRequirementChange" class="...">
+  <option disabled value="">请选择需求</option>
+  <option v-for="req in requirements" :value="req.id" :key="req.id">
+    {{ req.name }} v{{ req.version }}
+  </option>
+</select>
+
+<select @change="onModuleChange" class="...">
+  <option disabled selected>请选择模块</option>
+  <option v-for="mod in modules" :value="mod.id" :key="mod.id">{{ mod.name }}</option>
+</select>
+
+
+
                 <div class="bg-white rounded-lg shadow p-6">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center">
@@ -32,24 +30,53 @@
                             </button>
                         </div>
                     </div>
-                    <pre id="codeBlock" class="bg-gray-50 p-4 rounded-lg overflow-x-auto text-sm font-mono"
-                        style="height: 600px;">// 请选择需求和模块查看代码</pre>
+                  <pre id="codeBlock" class="..." style="height: 600px;">
+  {{ selectedModuleCode || '// 请选择需求和模块查看代码' }}
+</pre>
+
                 </div>
             </div>
   </template>
   
   <script>
+  import axios from 'axios';
+
   export default {
     name: 'ModulesPage',
-    data() {
-      return {
-        modules: [
-          { id: 1, name: 'Module A' },
-          { id: 2, name: 'Module B' },
-          { id: 3, name: 'Module C' }
-        ]
-      }
-    }
+   data() {
+  return {
+    requirements: [],
+    selectedRequirementId: null,
+    modules: [],
+    selectedModuleCode: ''
+  };
+},
+mounted() {
+  this.fetchRequirements();
+},
+methods: {
+  async fetchRequirements() {
+    const res = await axios.get('/api/requirements/list');
+    this.requirements = res.data;
+  },
+  async onRequirementChange() {
+    const res = await axios.post('/api/modules/generate', {
+      requirement_id: this.selectedRequirementId
+    });
+    this.modules = res.data;
+    this.selectedModuleCode = '';
+  },
+  onModuleChange(event) {
+    const moduleId = parseInt(event.target.value);
+    const mod = this.modules.find(m => m.id === moduleId);
+    this.selectedModuleCode = mod ? mod.code : '// 无模块代码';
+  },
+  copyCode() {
+    navigator.clipboard.writeText(this.selectedModuleCode);
   }
+}
+
+  }
+
   </script>
   

@@ -3,9 +3,11 @@
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg font-medium">需求列表</h2>
-                <button class="bg-primary text-white px-4 py-2 !rounded-button flex items-center">
-                    <i class="fas fa-plus mr-2"></i>新建需求
-                </button>
+
+              <button @click="openAddModal" class="bg-primary text-white px-4 py-2 !rounded-button flex items-center">
+  <i class="fas fa-plus mr-2"></i>新建需求
+</button>
+
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full">
@@ -96,14 +98,26 @@
                 </table>
 
             </div>
-            <div v-if="showModal" class="modal">
-                <div class="modal-content">
-                    <h3>Edit Requirement</h3>
-                    <textarea v-model="editedContent" class="textarea"></textarea>
-                    <button @click="saveRequirement">Save</button>
-                    <button @click="closeModal">Cancel</button>
-                </div>
-            </div>
+
+          <div v-if="showModal" class="modal">
+  <div class="modal-content">
+    <h3 class="text-lg font-semibold mb-4">编辑需求内容</h3>
+    <textarea
+      v-model="editedContent"
+      rows="6"
+      class="w-full border rounded px-3 py-2 text-sm focus:outline-primary resize-none"
+      placeholder="请输入需求内容"
+    ></textarea>
+
+    <div class="flex justify-end space-x-3 mt-4">
+      <button @click="closeModal" class="px-4 py-2 border rounded text-sm text-gray-600">取消</button>
+      <button @click="saveRequirement" class="px-4 py-2 bg-primary text-white rounded text-sm hover:bg-blue-600">
+        保存
+      </button>
+    </div>
+  </div>
+</div>
+
         </div>
 
         <div class="bg-white rounded-lg shadow p-6">
@@ -140,6 +154,36 @@
             </div>
         </div>
     </div>
+<div v-if="showAddModal" class="modal">
+  <div class="modal-content">
+    <h3 class="text-lg font-semibold mb-4">新建需求</h3>
+
+    <div class="space-y-3">
+      <input
+        v-model="newRequirement.name"
+        placeholder="需求名称"
+        class="w-full border rounded px-3 py-2 text-sm focus:outline-primary"
+      />
+      <input
+        v-model="newRequirement.version"
+        placeholder="版本号"
+        class="w-full border rounded px-3 py-2 text-sm focus:outline-primary"
+      />
+      <textarea
+        v-model="newRequirement.content"
+        placeholder="请输入需求内容"
+        rows="5"
+        class="w-full border rounded px-3 py-2 text-sm focus:outline-primary"
+      ></textarea>
+    </div>
+
+    <div class="flex justify-end space-x-3 mt-4">
+      <button @click="showAddModal = false" class="px-4 py-2 border rounded text-sm text-gray-600">取消</button>
+      <button @click="saveNewRequirement" class="px-4 py-2 bg-primary text-white rounded text-sm hover:bg-blue-600">保存</button>
+    </div>
+  </div>
+</div>
+
 </template>
 
 <script setup>
@@ -220,6 +264,36 @@ onMounted(() => {
 //     }
     
 // };
+const showAddModal = ref(false)
+const newRequirement = ref({
+  name: '',
+  version: '',
+  content: '',
+})
+
+const openAddModal = () => {
+  showAddModal.value = true
+  newRequirement.value = {
+    name: '',
+    version: '',
+    content: ''
+  }
+}
+
+const saveNewRequirement = async () => {
+  try {
+    const userId = localStorage.getItem('user_id') || 1  // 用本地存储的 user_id
+    await axios.post('http://127.0.0.1:5000/api/requirements', {
+      ...newRequirement.value,
+      user_id: parseInt(userId)
+    })
+    showAddModal.value = false
+    await fetchRequirements()
+  } catch (err) {
+    console.error('Error creating requirement:', err)
+  }
+}
+
 </script>
 
 <style>

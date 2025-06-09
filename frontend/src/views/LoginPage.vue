@@ -61,12 +61,44 @@
       <div class="text-center">
         <p class="text-gray-500 text-sm">
           还没有账号？
-          <a href="#" class="text-primary hover:text-blue-600">立即注册</a>
+          <a href="#" @click.prevent="showRegister = true" class="text-primary hover:text-blue-600">立即注册</a>
+
         </p>
       </div>
     </div>
   </div>
 </div>
+  <!-- 注册弹窗 -->
+<div
+  v-if="showRegister"
+  class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+>
+  <div class="bg-white rounded-lg p-6 w-96 shadow-lg relative">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">注册新账号</h2>
+
+    <input
+      v-model="registerUsername"
+      type="text"
+      placeholder="请输入用户名"
+      class="w-full mb-3 p-2 border rounded"
+    />
+    <input
+      v-model="registerPassword"
+      type="password"
+      placeholder="请输入密码"
+      class="w-full mb-4 p-2 border rounded"
+    />
+
+    <div class="flex justify-end space-x-3">
+      <button @click="showRegister = false" class="px-4 py-2 text-gray-600 border rounded">取消</button>
+      <button @click="submitRegister" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">注册</button>
+    </div>
+
+    <p class="text-sm text-red-500 mt-2" v-if="registerError">{{ registerError }}</p>
+    <p class="text-sm text-green-500 mt-2" v-if="registerSuccess">{{ registerSuccess }}</p>
+  </div>
+</div>
+
   </template>
   
   <script setup>
@@ -101,11 +133,11 @@ const router = useRouter()
         rememberPassword: rememberPassword.value,
       });
   
-      if (response.data.message === "登录成功") {
+      if (response.data.message === "Login successful") {
         router.push('/requirements')
 
         // 登录成功后的处理
-        console.log("登录成功");
+        console.log("Login successful");
       } else {
         // 登录失败的处理
         console.log("登录失败");
@@ -114,5 +146,39 @@ const router = useRouter()
       console.error("登录请求失败:", error);
     }
   };
+  const showRegister = ref(false)
+const registerUsername = ref('')
+const registerPassword = ref('')
+const registerError = ref('')
+const registerSuccess = ref('')
+
+const submitRegister = async () => {
+  registerError.value = ''
+  registerSuccess.value = ''
+
+  if (!registerUsername.value || !registerPassword.value) {
+    registerError.value = '请输入用户名和密码'
+    return
+  }
+
+  try {
+    const response = await axios.post('/api/register', {
+      username: registerUsername.value,
+      password: registerPassword.value
+    })
+
+    if (response.data.message === 'Register successful') {
+      registerSuccess.value = '注册成功！请返回登录'
+      setTimeout(() => {
+        showRegister.value = false
+        registerUsername.value = ''
+        registerPassword.value = ''
+      }, 1500)
+    }
+  } catch (err) {
+    registerError.value = err.response?.data?.error || '注册失败'
+  }
+}
+
   </script>
   
