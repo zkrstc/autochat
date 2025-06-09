@@ -4,7 +4,7 @@ from flask_cors import CORS
 from werkzeug.exceptions import BadRequest, NotFound
 
 from werkzeug.security import check_password_hash
-
+from datetime import datetime
 import os
 
 import openai
@@ -13,7 +13,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 数据库配置
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/autochat'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/autochat'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -49,6 +49,58 @@ class Requirement(db.Model):
         }
 with app.app_context():
     db.create_all()
+
+class Architecture(db.Model):
+    __tablename__ = 'architectures'
+    id = db.Column(db.Integer, primary_key=True)
+    requirement_id = db.Column(db.Integer, db.ForeignKey('requirements.id'), nullable=False)
+    architecture_json = db.Column(db.Text, nullable=False)
+    generated_by = db.Column(db.String(20), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class DatabaseDesign(db.Model):
+    __tablename__ = 'database_designs'
+    id = db.Column(db.Integer, primary_key=True)
+    requirement_id = db.Column(db.Integer, db.ForeignKey('requirements.id'), nullable=False)
+    erd_diagram = db.Column(db.Text)
+    sql_script = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class ModuleCode(db.Model):
+    __tablename__ = 'module_codes'
+    id = db.Column(db.Integer, primary_key=True)
+    architecture_id = db.Column(db.Integer, db.ForeignKey('architectures.id'), nullable=False)
+    module_name = db.Column(db.String(50), nullable=False)
+    language = db.Column(db.String(20), nullable=False)
+    code = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class DeploymentLog(db.Model):
+    __tablename__ = 'deployment_logs'
+    id = db.Column(db.Integer, primary_key=True)
+    architecture_id = db.Column(db.Integer, db.ForeignKey('architectures.id'), nullable=False)
+    status = db.Column(db.String(20), nullable=False)
+    log_output = db.Column(db.Text)
+    executed_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class TestCase(db.Model):
+    __tablename__ = 'test_cases'
+    id = db.Column(db.Integer, primary_key=True)
+    requirement_id = db.Column(db.Integer, db.ForeignKey('requirements.id'), nullable=False)
+    input_data = db.Column(db.Text, nullable=False)
+    expected_output = db.Column(db.Text, nullable=False)
+    type = db.Column(db.String(30), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class VersionHistory(db.Model):
+    __tablename__ = 'version_history'
+    id = db.Column(db.Integer, primary_key=True)
+    entity_type = db.Column(db.String(30), nullable=False)
+    entity_id = db.Column(db.Integer, nullable=False)
+    version = db.Column(db.Integer, nullable=False)
+    data_snapshot = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
 
 # 登录接口
 @app.route('/api/login', methods=['POST'])
@@ -159,6 +211,37 @@ def update_requirement(id):
 def get_requirements_list():
     requirements = Requirement.query.all()
     return jsonify([{'id': r.id, 'name': r.name, 'version': r.version} for r in requirements])
+
+
+
+
+@app.route('/api/architectures/<int:requirement_id>', methods=['GET'])
+def get_architecture(requirement_id):
+    architecture = Architecture.query.filter_by(requirement_id=requirement_id).first()
+    
+    if not architecture:
+        return jsonify({
+            'error': 'Architecture not found',
+            'status': 404
+        }), 404
+    print(architecture.architecture_json)
+    import json
+
+    try:
+    # 确保返回的是可序列化的数据
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'id': architecture.id,
+                'requirement_id': architecture.requirement_id,
+                'architecture_json': architecture.architecture_json,
+                'generated_by': architecture.generated_by,
+                'created_at': architecture.created_at.isoformat()
+            }
+        })
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 
 @app.route('/api/modules/generate', methods=['POST'])
 def generate_modules():
