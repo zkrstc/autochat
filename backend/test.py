@@ -374,26 +374,37 @@ def get_module_code():
     
     return jsonify(result)
 
-
 @app.route('/api/modules/generate', methods=['POST'])
 def generate_modules():
     data = request.get_json()
     requirement_id = data.get('requirement_id')
+    architecture_id= data.get('architecture_id')
+    module_name = data.get('module_name')  # 用户选的模块名
+
+    if not requirement_id or not module_name:
+        return jsonify({'error': 'Missing required parameters'}), 400
 
     requirement = Requirement.query.get(requirement_id)
     if not requirement:
         return jsonify({'error': 'Requirement not found'}), 404
 
     prompt = f"""
-你是一个资深的软件架构师。请根据以下软件需求描述为我生成3个模块，并给出模块名和相应Python代码：
-需求内容如下：
-{requirement.content}
+你是一个资深的软件架构师。请根据以下软件需求描述为我生成模块，并给出模块名和相应的代码。
 
-请以如下 JSON 格式返回：
+**要求如下：**
+- 每个模块代码前添加一行注释，说明所使用的编程语言，例如：“# Language: Python”
+- 请按如下 JSON 格式返回：
+
 [
-  {{ "name": "模块名称", "code": "对应代码（多行字符串）" }},
+  {{
+    "name": "模块名称",
+    "code": "# Language: Python\\n代码内容..."
+  }},
   ...
 ]
+
+需求内容如下：
+{requirement.content}
 """
 
     try:
@@ -406,13 +417,69 @@ def generate_modules():
             temperature=0.7
         )
         text_response = response['choices'][0]['message']['content']
-
-        # 安全地将字符串 JSON 转换为对象
         import json
         modules = json.loads(text_response)
-        return jsonify(modules)
+
+        for module in modules:
+            code = module.get('code', '')
+            # 从注释中提取语言（默认 Python）
+            import re
+            match = re.search(r'#\s*Language:\s*(\w+)', code)
+            language = match.group(1) if match else 'Unknown'
+
+            code_entry = ModuleCode(
+                architecture_id=architecture_id,
+                module_name=module.get('name') or module_name,
+                language=language,
+                code=code,
+                created_at=datetime.utcnow()
+            )
+            db.session.add(code_entry)
+
+        db.session.commit()
+        return jsonify({'status': 'success', 'modules': modules})
     except Exception as e:
+        db.session.rollback()
         return jsonify({'error': str(e)}), 500
+
+# @app.route('/api/modules/generate', methods=['POST'])
+# def generate_modules():
+#     data = request.get_json()
+#     requirement_id = data.get('requirement_id')
+
+#     requirement = Requirement.query.get(requirement_id)
+#     if not requirement:
+#         return jsonify({'error': 'Requirement not found'}), 404
+
+#     prompt = f"""
+# 你是一个资深的软件架构师。请根据以下软件需求描述为我生成3个模块，并给出模块名和相应Python代码：
+# 需求内容如下：
+# {requirement.content}
+
+# 请以如下 JSON 格式返回：
+# [
+#   {{ "name": "模块名称", "code": "对应代码（多行字符串）" }},
+#   ...
+# ]
+# """
+
+#     try:
+#         response = openai.ChatCompletion.create(
+#             model="gpt-4",
+#             messages=[
+#                 {"role": "system", "content": "你是一个擅长软件模块划分与代码生成的专家。"},
+#                 {"role": "user", "content": prompt}
+#             ],
+#             temperature=0.7
+#         )
+#         text_response = response['choices'][0]['message']['content']
+
+#         # 安全地将字符串 JSON 转换为对象
+#         import json
+#         modules = json.loads(text_response)
+#         return jsonify(modules)
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 # 获取指定需求的数据库设计
 @app.route('/api/database_designs', methods=['GET'])
@@ -436,30 +503,39 @@ def get_database_designs():
     
     return jsonify(result)
 
-# 测试用例相关API
 @app.route('/api/test_cases', methods=['GET'])
 def get_test_cases():
-    requirement_id = request.args.get('requirement_id')
-    if not requirement_id:
-        return jsonify({'error': 'Missing requirement_id parameter'}), 400
-    
-    test_cases = TestCase.query.filter_by(
-        requirement_id=requirement_id
-    ).order_by(TestCase.created_at.desc()).all()
-    
-    if not test_cases:
-        return jsonify({'message': 'No test cases found', 'data': []})
-    
-    result = [{
+    requirement_id = request.args.get('requirement_id', type=int)
+    if requirement_id is None:
+        return jsonify({'error': 'requirement_id is required'}), 400
+
+    cases = TestCase.query.filter_by(requirement_id=requirement_id).all()
+    print(cases)
+    return jsonify({
+    'data': [{
         'id': case.id,
-        'requirement_id': case.requirement_id,
         'input_data': case.input_data,
         'expected_output': case.expected_output,
-        'type': case.type,
-        'created_at': case.created_at.isoformat() if case.created_at else None
-    } for case in test_cases]
-    
-    return jsonify({'data': result})
+        'type': case.type
+    } for case in cases]
+})
+
+
+@app.route('/api/test_cases/<int:id>', methods=['PUT'])
+def update_test_case(id):
+    data = request.json
+    case = TestCase.query.get_or_404(id)
+    case.input_data = data.get('input_data', case.input_data)
+    case.expected_output = data.get('expected_output', case.expected_output)
+    db.session.commit()
+    return jsonify({'message': '更新成功'})
+
+@app.route('/api/test_cases/<int:id>', methods=['DELETE'])
+def delete_test_case(id):
+    case = TestCase.query.get_or_404(id)
+    db.session.delete(case)
+    db.session.commit()
+    return jsonify({'message': '删除成功'})
 
 if __name__ == '__main__':
     app.run(debug=True)

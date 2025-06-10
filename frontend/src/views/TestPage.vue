@@ -30,7 +30,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">类型</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">输入数据</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">预期输出</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">创建时间</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">操作</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -63,7 +63,10 @@
                                 <pre class="truncate">{{ formatJson(testCase.expected_output) }}</pre>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ formatDate(testCase.created_at) }}
+                                <button @click="openEditModal(testCase)"
+                                    class="text-blue-500 hover:underline">修改</button>
+                                <button @click="deleteTestCase(testCase.id)"
+                                    class="text-red-500 hover:underline ml-2">删除</button>
                             </td>
                         </tr>
                     </tbody>
@@ -71,32 +74,28 @@
             </div>
         </div>
 
-        <!-- 分页部分 -->
-        <div class="flex justify-between items-center mt-4">
-            <div class="flex items-center">
-                <span class="text-sm text-gray-700">显示</span>
-                <select id="pageSizeSelect"
-                    class="border border-gray-300 rounded-button px-2 py-1 mx-2 focus:outline-none focus:ring-2 focus:ring-primary"
-                    onchange="updateTestCases()">
-                    <option value="6">6</option>
-                    <option value="12">12</option>
-                    <option value="18">18</option>
-                </select>
-                <span class="text-sm text-gray-700">条</span>
+
+    </div>
+
+    <!-- 弹窗编辑框 -->
+    <div v-if="showEditModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+        <div class="bg-white p-6 rounded shadow w-96">
+            <h3 class="text-lg font-semibold mb-4">编辑测试用例</h3>
+            <div class="mb-4">
+                <label class="block text-sm">输入数据：</label>
+                <textarea v-model="editData.input_data" class="w-full border p-2 text-sm" rows="3"></textarea>
             </div>
-            <div class="flex items-center">
-                <button id="prevPageButton"
-                    class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <i class="fas fa-angle-left"></i>
-                </button>
-                <span id="currentPage" class="mx-4 text-sm text-gray-700">1</span>
-                <button id="nextPageButton"
-                    class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    <i class="fas fa-angle-right"></i>
-                </button>
+            <div class="mb-4">
+                <label class="block text-sm">预期输出：</label>
+                <textarea v-model="editData.expected_output" class="w-full border p-2 text-sm" rows="3"></textarea>
+            </div>
+            <div class="flex justify-end space-x-2">
+                <button @click="showEditModal = false" class="text-gray-600">取消</button>
+                <button @click="submitEdit" class="bg-blue-500 text-white px-4 py-1 rounded">保存</button>
             </div>
         </div>
     </div>
+
 </template>
   
   <script>
@@ -106,7 +105,12 @@
     data() {
         return {
             // 已有数据...
-            
+            showEditModal: false,
+            editData: {
+                id: null,
+                input_data: '',
+                expected_output: ''
+            },
             error: null,
             selectedRequirement: '',
             selectedRequirementId: null,
@@ -119,6 +123,7 @@
         this.fetchRequirements();
     },
     methods: {
+        
         handleRequirementSelected(id) {
             this.selectedRequirementId = id;
             console.log('Selected Requirement ID:', this.selectedRequirementId);
@@ -157,7 +162,7 @@
 
             this.generating = true;
             try {
-                const response = await axios.post('/api/test_cases/generate', {
+                const response = await axios.post('http://127.0.0.1:5000/api/test_cases/generate', {
                     requirement_id: this.selectedRequirement
                 });
 
@@ -191,6 +196,39 @@
                 default: 'bg-gray-100 text-gray-800'
             };
             return classes[type] || classes.default;
+        },
+        openEditModal(testCase) {
+            this.editData = {
+                id: testCase.id,
+                input_data: testCase.input_data,
+                expected_output: testCase.expected_output
+            }
+            this.showEditModal = true
+        },
+        submitEdit() {
+            axios
+                .put(`http://127.0.0.1:5000/api/test_cases/${this.editData.id}`, {
+                    input_data: this.editData.input_data,
+                    expected_output: this.editData.expected_output
+                })
+                .then(() => {
+                    this.showEditModal = false
+                    this.fetchTestCases(this.editData.id) // 刷新数据
+                })
+                .catch(err => {
+                    console.error('更新失败', err)
+                })
+        },
+        deleteTestCase(id) {
+            if (!confirm('确定删除该测试用例吗？')) return
+            axios
+                .delete(`http://127.0.0.1:5000/api/test_cases/${id}`)
+                .then(() => {
+                    this.fetchTestCases(this.editData.id)
+                })
+                .catch(err => {
+                    console.error('删除失败', err)
+                })
         }
     },
     watch: {

@@ -38,7 +38,7 @@
           <button @click="copyCombinedCode" class="px-4 py-2 bg-primary text-white !rounded-button">
             <i class="far fa-copy mr-2"></i>复制代码
           </button>
-          <button class="px-4 py-2 border border-gray-300 !rounded-button">
+          <button @click="generateCode" class="px-4 py-2 border border-gray-300 !rounded-button">
             <i class="fas fa-download mr-2"></i>生成代码
           </button>
         </div>
@@ -59,7 +59,7 @@
 
 <script>
 import axios from 'axios';
-
+import { ElMessage } from 'element-plus'
 export default {
   name: 'ModulesPage',
   data() {
@@ -135,7 +135,7 @@ export default {
       }
     },
     async fetchRequirements() {
-      const res = await axios.get('http://127.0.0.1:5000//api/requirements/list');
+      const res = await axios.get('http://127.0.0.1:5000/api/requirements/list');
       this.requirements = res.data;
     },
     async onRequirementChange() {
@@ -157,6 +157,29 @@ export default {
     resetModuleSelection() {
       this.selectedModule = '';
       this.moduleCodes = [];
+    },
+    async generateCode() {
+      if (!this.selectedModule || !this.architecture_id||!this.selectedRequirementId) {
+        ElMessage.warning('请先选择模块和需求')
+        return
+      }
+
+      this.loading = true
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/api/modules/generate', {
+          module_name: this.selectedModule,
+          requirement_id: this.selectedRequirementId,
+          architecture_id: this.selectedArchitectureId
+        })
+
+        ElMessage.success('代码生成成功，已保存到数据库')
+        console.log(response.data)
+      } catch (error) {
+        console.error(error)
+        ElMessage.error('生成失败：' + (error.response?.data?.error || '未知错误'))
+      } finally {
+        this.loading = false
+      }
     }
   }
 
