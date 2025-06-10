@@ -255,9 +255,9 @@ export default {
 
             this.isLoading = true;
             try {
-                const userId = this.$store.state.user.id; // 假设用户ID存储在Vuex中
+                const userId = this.$store.state.user.id; // 假设用户ID存储在Vuex中????????看这里这里不知道咋整
 
-                const response = await fetch('/api/architectures/generate', {
+                const response = await fetch('http://127.0.0.1:5000/api/api/architectures/generate', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

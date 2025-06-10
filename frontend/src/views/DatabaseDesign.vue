@@ -45,8 +45,10 @@
                     <button class="px-4 py-2 bg-primary text-white !rounded-button" @click="exportSQL">
                         <i class="fas fa-file-export mr-2"></i>导出SQL
                     </button>
-                    <button class="px-4 py-2 border border-gray-300 !rounded-button">
-                        <i class="fas fa-print mr-2"></i>生成数据库
+                    <button @click="generateDatabase" class="px-4 py-2 border border-gray-300 !rounded-button"
+                        :disabled="isGenerating">
+                        <i class="fas fa-print mr-2"></i>
+                        {{ isGenerating ? '生成中...' : '生成数据库' }}
                     </button>
                 </div>
             </div>
@@ -100,7 +102,8 @@ export default {
                 frontend: 'fab fa-vuejs',
                 backend: 'fab fa-python',
                 database: 'fas fa-database'
-            }
+            },
+            isGenerating: false
         }
     },
     created() {
@@ -236,6 +239,32 @@ ${erdData}
                 .catch(err => {
                     console.error('复制失败:', err);
                 });
+        },
+        async generateDatabase() {
+            if (!this.requirementId) {
+                this.$toast.error('请先选择需求')
+                return
+            }
+
+            this.isGenerating = true
+
+            try {
+                const response = await this.$axios.post('http://127.0.0.1:5000/api/api/database/generate', {
+                    requirement_id: this.selectedRequirementId
+                })
+
+                if (response.data.error) {
+                    throw new Error(response.data.error)
+                }
+
+                this.$toast.success('数据库设计生成成功')
+                this.$emit('database-generated', response.data)
+            } catch (error) {
+                console.error('生成数据库失败:', error)
+                this.$toast.error(`生成数据库失败: ${error.message}`)
+            } finally {
+                this.isGenerating = false
+            }
         }
     }
 

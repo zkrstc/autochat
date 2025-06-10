@@ -18,8 +18,10 @@
         <div class="bg-white rounded-lg shadow p-6 mb-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg font-medium">测试用例列表</h2>
-                <button class="bg-primary text-white px-4 py-2 !rounded-button flex items-center">
-                    <i class="fas fa-plus mr-2"></i>生成测试用例
+                <button @click="generateTestCases"
+                    class="bg-primary text-white px-4 py-2 !rounded-button flex items-center" :disabled="isGenerating">
+                    <i class="fas fa-plus mr-2"></i>
+                    {{ isGenerating ? '生成中...' : '生成测试用例' }}
                 </button>
             </div>
             <div class="overflow-x-auto">
@@ -116,7 +118,9 @@
             selectedRequirementId: null,
             testCases: [],
             loading: false,
-            generating: false
+            generating: false,
+            isGenerating: false,
+            selectedArchitectureId: '',
         }
     },
     created() {
@@ -127,7 +131,30 @@
         handleRequirementSelected(id) {
             this.selectedRequirementId = id;
             console.log('Selected Requirement ID:', this.selectedRequirementId);
-            this.fetchTestCases(this.selectedRequirementId);
+            this.fetchArchitecture(id);
+            this.fetchTestCases(id);
+            
+        },
+        async fetchArchitecture(requirementId) {
+            this.loading = true;
+            this.error = null;
+
+            try {
+                const response = await axios.get(`http://127.0.0.1:5000/api/architectures/${requirementId}`);
+                if (response.data.status === 'success') {
+                    this.architecture = JSON.parse(response.data.data.architecture_json);
+                    this.selectedArchitectureId = response.data.data.id;
+                    this.architectureModules = this.architecture.modules || [];
+                } else {
+                    throw new Error(response.data.message || 'Failed to fetch architecture');
+                }
+            } catch (error) {
+                console.error('Error fetching architecture:', error);
+                this.error = error.message;
+                this.architectureModules = [];
+            } finally {
+                this.loading = false;
+            }
         },
         async fetchRequirements() {
             this.loading = true;
@@ -158,21 +185,30 @@
         },
 
         async generateTestCases() {
-            if (!this.selectedRequirement) return;
+            if (!this.requirementId) {
+                this.$toast.error('请先选择需求')
+                return
+            }
 
-            this.generating = true;
+            this.isGenerating = true
+
             try {
-                const response = await axios.post('http://127.0.0.1:5000/api/test_cases/generate', {
-                    requirement_id: this.selectedRequirement
-                });
+                const response = await this.$axios.post('http://127.0.0.1:5000/api/test-cases/generate', {
+                    requirement_id: this.selectedRequirementId,
+                    architecture_id: this.selectedArchitectureId
+                })
 
-                this.$toast.success(response.data.message);
-                await this.fetchTestCases(this.selectedRequirement);
+                if (response.data.error) {
+                    throw new Error(response.data.error)
+                }
+
+                this.$toast.success(`成功生成 ${response.data.length} 条测试用例`)
+                this.$emit('test-cases-generated', response.data)
             } catch (error) {
-                console.error('生成测试用例失败:', error);
-                this.$toast.error(error.response?.data?.error || '生成失败');
+                console.error('生成测试用例失败:', error)
+                this.$toast.error(`生成测试用例失败: ${error.message}`)
             } finally {
-                this.generating = false;
+                this.isGenerating = false
             }
         },
 

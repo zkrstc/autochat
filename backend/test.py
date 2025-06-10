@@ -503,6 +503,104 @@ def get_database_designs():
     
     return jsonify(result)
 
+
+
+@app.route('/api/database/generate', methods=['POST'])
+def generate_database():
+    data = request.get_json()
+    requirement_id = data.get('requirement_id')
+
+    if not requirement_id:
+        return jsonify({'error': 'requirement_id is required'}), 400
+
+    requirement = Requirement.query.get(requirement_id)
+    if not requirement:
+        return jsonify({'error': 'Requirement not found'}), 404
+
+    prompt = f"""
+你是一个专业的数据库架构师。请根据以下软件需求描述为我设计数据库，包括：
+
+1. ER图（使用纯文本表示，格式如下示例）
+2. SQL建表语句
+
+**ER图格式示例：**
++-------------+       +-------------+       +-------------+
+|    User     |       |  Product    |       |    Order    |
++-------------+       +-------------+       +-------------+
+| id (PK)     |       | id (PK)     |       | id (PK)     |
+| name        |       | shop_id (FK)|       | user_id (FK)|
+| phone       |       | name        |       | shop_id (FK)|
+| password    |       | price       |       | status      |
++-------------+       +-------------+       | total       |
+      |                     |              | created_at  |
+      |                     |              +-------------+
+      |                     |                    |
+      |                     +----------+         |
+      |                                |         |
+      v                                v         v
++--------------------------+-----------------------------+
+|         OrderItem        |         Shop               |
++--------------------------+-----------------------------+
+| order_id (PK,FK)         | id (PK)                    |
+| product_id (PK,FK)       | name                       |
+| quantity                 | address                    |
+| price_at_order           +-----------------------------+
++--------------------------+
+
+**SQL语句格式要求：**
+- 使用标准SQL语法
+- 包含主键、外键约束
+- 包含适当的索引
+- 包含必要的注释
+
+请以如下JSON格式返回：
+{{
+  "erd_diagram": "纯文本ER图",
+  "sql_script": "完整的SQL建表语句"
+}}
+
+需求内容如下：
+{requirement.content}
+"""
+
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "你是一个专业的数据库架构师，擅长设计关系型数据库。"},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
+        
+        result = response['choices'][0]['message']['content']
+        import json
+        db_design = json.loads(result)
+
+        # 保存到数据库
+        design = DatabaseDesign(
+            requirement_id=requirement_id,
+            erd_diagram=db_design.get('erd_diagram'),
+            sql_script=db_design.get('sql_script'),
+            created_at=datetime.utcnow()
+        )
+        
+        db.session.add(design)
+        db.session.commit()
+
+        return jsonify({
+            'id': design.id,
+            'erd_diagram': design.erd_diagram,
+            'sql_script': design.sql_script,
+            'created_at': design.created_at.isoformat()
+        })
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+
 @app.route('/api/test_cases', methods=['GET'])
 def get_test_cases():
     requirement_id = request.args.get('requirement_id', type=int)
@@ -536,6 +634,102 @@ def delete_test_case(id):
     db.session.delete(case)
     db.session.commit()
     return jsonify({'message': '删除成功'})
+
+
+@app.route('/api/test-cases/generate', methods=['POST'])
+def generate_test_cases():
+    data = request.get_json()
+    requirement_id = data.get('requirement_id')
+    architecture_id = data.get('architecture_id')
+
+    if not requirement_id or not architecture_id:
+        return jsonify({'error': 'requirement_id and architecture_id are required'}), 400
+
+    requirement = Requirement.query.get(requirement_id)
+    architecture = Architecture.query.get(architecture_id)
+    
+    if not requirement:
+        return jsonify({'error': 'Requirement not found'}), 404
+    if not architecture:
+        return jsonify({'error': 'Architecture not found'}), 404
+
+    try:
+        # 解析架构JSON获取模块列表
+        architecture_data = json.loads(architecture.architecture_json)
+        modules = architecture_data.get('modules', [])
+        
+        prompt = f"""
+你是一个专业的测试工程师。请根据以下信息生成全面的测试用例：
+
+1. 系统架构模块：
+{', '.join(modules) if modules else '无明确模块划分'}
+
+2. 技术栈：
+前端: {architecture_data.get('technologyStack', {}).get('frontend', '未知')}
+后端: {architecture_data.get('technologyStack', {}).get('backend', '未知')}
+数据库: {architecture_data.get('technologyStack', {}).get('database', '未知')}
+
+3. 需求内容：
+{requirement.content}
+
+要求：
+1. 为每个主要模块生成测试用例
+2. 包含正常情况和异常情况的测试用例
+3. 每个测试用例包含：
+   - 测试类型（单元测试/集成测试/系统测试）
+   - 具体输入数据
+   - 预期输出结果
+4. 使用如下JSON格式返回：
+
+[
+  {{
+    "type": "测试板块",
+    "input_data": "具体的输入数据",
+    "expected_output": "预期输出结果"
+  }},
+  ...
+]
+"""
+
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "你是一个专业的测试工程师，擅长编写各种类型的测试用例。"},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7
+        )
+        
+        test_cases = json.loads(response['choices'][0]['message']['content'])
+        saved_cases = []
+
+        for case in test_cases:
+            new_case = TestCase(
+                requirement_id=requirement_id,
+                type=case.get('type', '单元测试'),
+                input_data=case.get('input_data', ''),
+                expected_output=case.get('expected_output', ''),
+                created_at=datetime.utcnow()
+            )
+            db.session.add(new_case)
+            db.session.flush()  # 获取生成的ID
+            saved_cases.append({
+                'id': new_case.id,
+                'type': new_case.type,
+                'input_data': new_case.input_data,
+                'expected_output': new_case.expected_output,
+                'created_at': new_case.created_at.isoformat()
+            })
+
+        db.session.commit()
+
+        return jsonify(saved_cases)
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+    
+
 
 if __name__ == '__main__':
     app.run(debug=True)
