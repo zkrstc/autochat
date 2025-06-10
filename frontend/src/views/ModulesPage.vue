@@ -111,7 +111,7 @@ export default {
     // 选择模块
     handleModuleSelected(moduleName) {
       if (!this.selectedRequirementId || !moduleName) return;
-      this.fetchModuleCodes(this.selectedRequirementId, moduleName);
+      this.fetchModuleCodes(this.selectedArchitectureId, moduleName);
     },
     // 获取模块代码
     async fetchModuleCodes(architectureId, moduleName) {
@@ -121,7 +121,7 @@ export default {
       try {
         const response = await axios.get('http://127.0.0.1:5000/api/module_code', {
           params: {
-            architecture_id: this.selectedArchitectureId,
+            architecture_id: architectureId,
             module_name: moduleName
           }
         });

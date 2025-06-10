@@ -414,10 +414,27 @@ def generate_modules():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
-
-
-
+# 获取指定需求的数据库设计
+@app.route('/api/database_designs', methods=['GET'])
+def get_database_designs():
+    requirement_id = request.args.get('requirement_id')
+    if not requirement_id:
+        return jsonify({'error': 'Missing requirement_id parameter'}), 400
+    
+    designs = DatabaseDesign.query.filter_by(requirement_id=requirement_id).order_by(DatabaseDesign.created_at.desc()).all()
+    
+    if not designs:
+        return jsonify({'error': 'No database designs found for this requirement'}), 404
+    
+    result = [{
+        'id': design.id,
+        'requirement_id': design.requirement_id,
+        'erd_diagram': design.erd_diagram,
+        'sql_script': design.sql_script,
+        'created_at': design.created_at.isoformat() if design.created_at else None
+    } for design in designs]
+    
+    return jsonify(result)
 
 
 if __name__ == '__main__':
