@@ -436,6 +436,30 @@ def get_database_designs():
     
     return jsonify(result)
 
+# 测试用例相关API
+@app.route('/api/test_cases', methods=['GET'])
+def get_test_cases():
+    requirement_id = request.args.get('requirement_id')
+    if not requirement_id:
+        return jsonify({'error': 'Missing requirement_id parameter'}), 400
+    
+    test_cases = TestCase.query.filter_by(
+        requirement_id=requirement_id
+    ).order_by(TestCase.created_at.desc()).all()
+    
+    if not test_cases:
+        return jsonify({'message': 'No test cases found', 'data': []})
+    
+    result = [{
+        'id': case.id,
+        'requirement_id': case.requirement_id,
+        'input_data': case.input_data,
+        'expected_output': case.expected_output,
+        'type': case.type,
+        'created_at': case.created_at.isoformat() if case.created_at else None
+    } for case in test_cases]
+    
+    return jsonify({'data': result})
 
 if __name__ == '__main__':
     app.run(debug=True)

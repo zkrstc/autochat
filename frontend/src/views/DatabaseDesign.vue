@@ -81,11 +81,11 @@
         </div>
     </div>
 </template>
-  
-  <script>
+
+<script>
 import axios from 'axios';
 import mermaid from 'mermaid';
-  export default {
+export default {
     name: 'DatabaseDesign',
     data() {
         return {
@@ -239,6 +239,5 @@ ${erdData}
         }
     }
 
-  }
-  </script>
-  
+}
+</script>
