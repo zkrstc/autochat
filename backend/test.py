@@ -305,7 +305,7 @@ def generate_architecture():
 
         
         response = client.chat.completions.create(
-                model="deepseek-reasoner",
+                model="deepseek-chat",
                 messages=[
                     {"role": "system", "content": "你是一个资深的软件架构师，擅长设计清晰、可扩展的系统架构。"},
                     {"role": "user", "content": prompt}
@@ -317,12 +317,12 @@ def generate_architecture():
             
         # 解析AI响应
         ai_response = response.choices[0].message.content
-        architecture_data = json.loads(ai_response)
+        
         print(ai_response)
         # 创建架构记录
         new_architecture = Architecture(
             requirement_id=requirement_id,
-            architecture_json=architecture_data,
+            architecture_json=ai_response,
             generated_by=user_name,
             created_at=datetime.utcnow()
         )
@@ -386,6 +386,7 @@ def generate_modules():
         return jsonify({'error': 'Missing required parameters'}), 400
 
     requirement = Requirement.query.get(requirement_id)
+    architecture=Architecture.query.get(architecture_id)
     if not requirement:
         return jsonify({'error': 'Requirement not found'}), 404
 
@@ -404,13 +405,13 @@ def generate_modules():
   ...
 ]
 
-需求内容如下：
-{requirement.content}
+架构内容如下：
+{architecture.architecture_json}
 """
 
     try:
         response = client.chat.completions.create(
-            model="deepseek-reasoner",
+            model="deepseek-chat",
             messages=[
                 {"role": "system", "content": "你是一个擅长软件模块划分与代码生成的专家。"},
                 {"role": "user", "content": prompt}
@@ -420,7 +421,7 @@ def generate_modules():
         text_response = response['choices'][0]['message']['content']
         import json
         modules = json.loads(text_response)
-
+        print(text_response)
         for module in modules:
             code = module.get('code', '')
             # 从注释中提取语言（默认 Python）
@@ -566,7 +567,7 @@ def generate_database():
 
     try:
         response = client.chat.completions.create(
-            model="deepseek-reasoner",
+            model="deepseek-chat",
             messages=[
                 {"role": "system", "content": "你是一个专业的数据库架构师，擅长设计关系型数据库。"},
                 {"role": "user", "content": prompt}
@@ -693,7 +694,7 @@ def generate_test_cases():
 """
 
         response = client.chat.completions.create(
-            model="deepseek-reasoner",
+            model="deepseek-chat",
             messages=[
                 {"role": "system", "content": "你是一个专业的测试工程师，擅长编写各种类型的测试用例。"},
                 {"role": "user", "content": prompt}
