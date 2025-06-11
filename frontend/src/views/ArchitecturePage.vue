@@ -275,6 +275,9 @@ export default {
                 });
                 //this.architecture = JSON.parse(response.data.data.architecture_json);
                 const data = await response.json();
+
+
+
                 if (response.ok) {
                     this.architecture = data.data.architecture_json;
                     this.$toast.success('架构生成成功！');

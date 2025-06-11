@@ -39,21 +39,22 @@
             <i class="far fa-copy mr-2"></i>复制代码
           </button>
           <button @click="generateCode" class="px-4 py-2 border border-gray-300 !rounded-button">
-            <i class="fas fa-download mr-2"></i>生成代码
+            <i class="fas fa-print mr-2"></i>
+            {{ isGenerating ? '生成中...' : '生成代码' }}
           </button>
         </div>
       </div>
 
       <pre v-if="moduleCodes.length > 0" class="..." style="height: 600px;">
-  <div v-for="(code, index) in moduleCodes" :key="index" class="mb-6">
-    <div class="text-sm text-gray-500 mb-1">// {{ code.language }} 代码</div>
-    <code class="text-left block whitespace-pre">{{ code.code }}</code>
-  </div>
-</pre>
-      <pre v-else class="..." style="height: 600px;">
+        <div v-for="(code, index) in moduleCodes" :key="index" class="mb-6 text-left">
+  <div class="text-sm text-gray-500 mb-1">// {{ code.language }} 代码</div>
+  <pre class="p-4 bg-gray-100 rounded-md overflow-x-auto"><code class="block whitespace-pre text-left">{{ code.code }}</code></pre>
+    </div>
+    </pre>
+    <pre v-else class="..." style="height: 600px;">
         // 请选择需求和模块查看代码
       </pre>
-    </div>
+  </div>
   </div>
 </template>
 
@@ -74,6 +75,7 @@ export default {
       loading: false,
       error: null,
       selectedArchitectureId: '',
+      isGenerating: false
     };
   },
   mounted() {
@@ -159,11 +161,11 @@ export default {
       this.moduleCodes = [];
     },
     async generateCode() {
-      if (!this.selectedModule || !this.architecture_id||!this.selectedRequirementId) {
+      if (!this.selectedModule || !this.selectedArchitectureId||!this.selectedRequirementId) {
         ElMessage.warning('请先选择模块和需求')
         return
       }
-
+      this.isGenerating = true
       this.loading = true
       try {
         const response = await axios.post('http://127.0.0.1:5000/api/modules/generate', {
@@ -179,6 +181,8 @@ export default {
         ElMessage.error('生成失败：' + (error.response?.data?.error || '未知错误'))
       } finally {
         this.loading = false
+        this.isGenerating = false
+        this.fetchModuleCodes(this.selectedArchitectureId, this.selectedModule)
       }
     }
   }

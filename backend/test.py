@@ -9,6 +9,7 @@ import os
 import json
 from openai import OpenAI
 from config import API_CONFIG
+from sqlalchemy.exc import SQLAlchemyError
 app = Flask(__name__)
 CORS(app)
 
@@ -381,7 +382,9 @@ def generate_modules():
     requirement_id = data.get('requirement_id')
     architecture_id= data.get('architecture_id')
     module_name = data.get('module_name')  # 用户选的模块名
-
+    print(requirement_id)
+    print(architecture_id)
+    print(module_name)
     if not requirement_id or not module_name:
         return jsonify({'error': 'Missing required parameters'}), 400
 
@@ -396,7 +399,18 @@ def generate_modules():
 **要求如下：**
 - 每个模块代码前添加一行注释，说明所使用的编程语言，例如：“# Language: Python”
 - 请按如下 JSON 格式返回：
-
+⚠️ 请严格遵循以下要求输出：
+    1. **只输出 JSON 数据**，不要包含任何其他描述性语言；
+    2. JSON 的结构必须完全符合下面给出的格式模板；
+    3. 不允许在 JSON 外加任何解释、前缀或后缀文本。
+    4. 不要有任何多于的字符、空格、换行符。
+    5. 模块名不能包含特殊字符。
+    6. 只需要生成当前选择的模块的代码
+当前只需生成关于名称是{module_name}的前端和后端代码。
+不需要其他的任何代码,最好根据架构来设计前后端的代码,
+代码必须都是一个名称，不需要什么加上什么前后缀（不需要User Module Frontend之类的，
+直接使用User Module就好了）,你可以将该代码分成至多3个json数据
+**JSON 模板：**
 [
   {{
     "name": "模块名称",
@@ -408,6 +422,8 @@ def generate_modules():
 架构内容如下：
 {architecture.architecture_json}
 """
+    #如果需要关联各个代码可以在使用module_codes的查询记录
+    import re
 
     try:
         response = client.chat.completions.create(
@@ -416,22 +432,28 @@ def generate_modules():
                 {"role": "system", "content": "你是一个擅长软件模块划分与代码生成的专家。"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=0.7,
+            max_tokens=2048
         )
-        text_response = response['choices'][0]['message']['content']
-        import json
+        print(response)
+        text_response = response.choices[0].message.content
+        # text_response = re.sub(r'```json.*?```', '', text_response, flags=re.DOTALL)
+        # import json
         modules = json.loads(text_response)
-        print(text_response)
+        
         for module in modules:
             code = module.get('code', '')
-            # 从注释中提取语言（默认 Python）
-            import re
-            match = re.search(r'#\s*Language:\s*(\w+)', code)
-            language = match.group(1) if match else 'Unknown'
+            
+            # 处理转义字符
+            code = code.replace('\\n', '\n')
+            
+            # 从注释中提取语言
+            match = re.search(r'#\s*Language:\s*([^\n\\]+)', code)
+            language = match.group(1).strip() if match else 'Unknown'
 
             code_entry = ModuleCode(
                 architecture_id=architecture_id,
-                module_name=module.get('name') or module_name,
+                module_name=module.get('name'),
                 language=language,
                 code=code,
                 created_at=datetime.utcnow()
@@ -440,6 +462,10 @@ def generate_modules():
 
         db.session.commit()
         return jsonify({'status': 'success', 'modules': modules})
+        
+    except SQLAlchemyError as e:
+        db.session.rollback()  # 发生错误时回滚事务
+        print(f"数据库操作失败: {str(e)}")
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 500

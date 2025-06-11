@@ -6,7 +6,7 @@
                         <button class="flex items-center space-x-3 !rounded-button">
                             <img src="https://ai-public.mastergo.com/ai/img_res/c7de0a2547793954cd19a41b0e9ca26a.jpg"
                                 class="w-10 h-10 rounded-full object-cover" alt="用户头像">
-                            <span class="text-gray-700">陈志远</span>
+                            <span class="text-gray-700">{{name}}</span>
                             <i class="fas fa-chevron-down text-gray-400 text-sm"></i>
                         </button>
                         <div class="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg py-2 hidden">
@@ -30,7 +30,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const currentTitle = ref('');
-
+const name = ref('');
 watch(
   () => route.meta.title,  // 直接监听meta.title
   (newTitle) => {
@@ -39,7 +39,9 @@ watch(
   { immediate: true }
 );
 
-onMounted(() => {
+  onMounted(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    name.value = user.username;
   const button = document.querySelector('button:has(img)');
   const dropdown = document.querySelector('.absolute.right-0');
     
