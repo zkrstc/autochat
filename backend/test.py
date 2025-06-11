@@ -111,7 +111,8 @@ def login():
 
     if not username or not password:
         return jsonify({'error': 'Missing username or password'}), 400
-
+    print(username)
+    print(password)
     user = User.query.filter_by(username=username).first()
     if user and check_password_hash(user.password_hash, password):
         return jsonify({'message': 'Login successful', 'user_name':user.username }), 200

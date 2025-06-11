@@ -190,6 +190,9 @@ export default {
             this.selectedRequirementId = id;
             console.log('Selected Requirement ID:', this.selectedRequirementId);
             this.fetchArchitecture(this.selectedRequirementId);
+            const user = JSON.parse(localStorage.getItem('user'));
+            console.log('当前用户:', user.username);
+            
         },
         async fetchRequirements() {
             this.loading = true;
@@ -257,6 +260,7 @@ export default {
             try {
                 // 获取存储的用户信息
                 const user = JSON.parse(localStorage.getItem('user'));
+                
                 const username = user.username;
                 if (user) {
                     console.log('当前用户:', user.username);
@@ -269,10 +273,10 @@ export default {
                     requirement_id: this.selectedRequirement,
                     user_name: username
                 });
-
+                //this.architecture = JSON.parse(response.data.data.architecture_json);
                 const data = await response.json();
                 if (response.ok) {
-                    this.architecture = data.data;
+                    this.architecture = data.data.architecture_json;
                     this.$toast.success('架构生成成功！');
                 } else {
                     throw new Error(data.message || 'Failed to generate architecture');

@@ -135,10 +135,12 @@
 
         // 存储到 localStorage
         localStorage.setItem('user', JSON.stringify({
-          id: response.data.user_id,
-          username: response.data.username
+          username: response.data.user_name
         }));
-        
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log('当前用户:', user.username);
+
         if (response.data.message === "Login successful") {
           router.push('/requirements')
   
