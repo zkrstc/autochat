@@ -283,7 +283,6 @@ export default {
                 }
             } catch (error) {
                 console.error('Error generating architecture:', error);
-                this.$toast.error('生成架构失败: ' + error.message);
             } finally {
                 this.isLoading = false;
             }

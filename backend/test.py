@@ -7,8 +7,8 @@ from werkzeug.security import check_password_hash
 from datetime import datetime
 import os
 import json
-import openai
-
+from openai import OpenAI
+from config import API_CONFIG
 app = Flask(__name__)
 CORS(app)
 
@@ -17,6 +17,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/a
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+client = OpenAI(
+    api_key=API_CONFIG["api_key"],
+    base_url=API_CONFIG["base_url"]
+)
 
 
 
@@ -259,6 +264,7 @@ def generate_architecture():
     
     # 获取需求文档内容
     requirement = Requirement.query.get(requirement_id)
+    
     if not requirement:
         return jsonify({'error': 'Requirement not found', 'status': 404}), 404
     
@@ -289,21 +295,23 @@ def generate_architecture():
     """
     
     try:
-        # 调用OpenAI API
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "你是一个资深的软件架构师，擅长设计清晰、可扩展的系统架构。"},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=1000
-        )
+
         
+        response = client.chat.completions.create(
+                model="deepseek-reasoner",
+                messages=[
+                    {"role": "system", "content": "你是一个资深的软件架构师，擅长设计清晰、可扩展的系统架构。"},
+                    {"role": "user", "content": "你是谁"}
+                ],
+                temperature=0.7,
+                max_tokens=1000
+            )
+ 
+            
         # 解析AI响应
         ai_response = response.choices[0].message.content
         architecture_data = json.loads(ai_response)
-        
+        print(ai_response)
         # 创建架构记录
         new_architecture = Architecture(
             requirement_id=requirement_id,
@@ -315,39 +323,41 @@ def generate_architecture():
         db.session.add(new_architecture)
         db.session.commit()
         
-        return jsonify({
-            'status': 'success',
-            'data': {
-                'id': new_architecture.id,
-                'requirement_id': new_architecture.requirement_id,
-                'architecture_json': new_architecture.architecture_json,
-                'generated_by': new_architecture.generated_by,
-                'created_at': new_architecture.created_at.isoformat()
-            }
-        })
+        # return jsonify({
+        #     'status': 'success',
+        #     'data': {
+        #         'id': new_architecture.id,
+        #         'requirement_id': new_architecture.requirement_id,
+        #         'architecture_json': new_architecture.architecture_json,
+        #         'generated_by': new_architecture.generated_by,
+        #         'created_at': new_architecture.created_at.isoformat()
+        #     }
+        # })
         
     except Exception as e:
         db.session.rollback()
+        # 打印详细的堆栈信息用于日志
+        print("捕获到异常：", str(e))
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
-# 新增API端点：通过requirement_id获取architecture
-@app.route('/api/architecture/by_requirement/<int:requirement_id>', methods=['GET'])
-def get_architecture_by_requirement(requirement_id):
-    architecture = Architecture.query.filter_by(requirement_id=requirement_id).first()
-    if not architecture:
-        return jsonify({
-            'status': 'error',
-            'message': 'Architecture not found for this requirement'
-        }), 404
+# # 新增API端点：通过requirement_id获取architecture
+# @app.route('/api/architecture/by_requirement/<int:requirement_id>', methods=['GET'])
+# def get_architecture_by_requirement(requirement_id):
+#     architecture = Architecture.query.filter_by(requirement_id=requirement_id).first()
+#     if not architecture:
+#         return jsonify({
+#             'status': 'error',
+#             'message': 'Architecture not found for this requirement'
+#         }), 404
     
-    return jsonify({
-        'status': 'success',
-        'data': {
-            'id': architecture.id,
-            'requirement_id': architecture.requirement_id
-        }
-    })
+#     return jsonify({
+#         'status': 'success',
+#         'data': {
+#             'id': architecture.id,
+#             'requirement_id': architecture.requirement_id
+#         }
+#     })
 
 @app.route('/api/module_code', methods=['GET'])
 def get_module_code():
@@ -409,8 +419,8 @@ def generate_modules():
 """
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = client.chat.completions.create(
+            model="deepseek-reasoner",
             messages=[
                 {"role": "system", "content": "你是一个擅长软件模块划分与代码生成的专家。"},
                 {"role": "user", "content": prompt}
@@ -565,8 +575,8 @@ def generate_database():
 """
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = client.chat.completions.create(
+            model="deepseek-reasoner",
             messages=[
                 {"role": "system", "content": "你是一个专业的数据库架构师，擅长设计关系型数据库。"},
                 {"role": "user", "content": prompt}
@@ -692,8 +702,8 @@ def generate_test_cases():
 ]
 """
 
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = client.chat.completions.create(
+            model="deepseek-reasoner",
             messages=[
                 {"role": "system", "content": "你是一个专业的测试工程师，擅长编写各种类型的测试用例。"},
                 {"role": "user", "content": prompt}
