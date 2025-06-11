@@ -13,7 +13,7 @@ app = Flask(__name__)
 CORS(app)
 
 # 数据库配置
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123456@localhost/autochat'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/autochat'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -328,8 +328,23 @@ def generate_architecture():
         )
         
         db.session.add(new_architecture)
+        #db.session.commit()
+        architecture_data = json.loads(ai_response)
+        modules = architecture_data.get('modules', [])
+        db.session.flush()
+        # 插入 module_codes
+        for module_name in modules:
+            code_stub = f"# This is the stub code for module: {module_name}\n\n# TODO: Replace with actual code"
+            module_code = ModuleCode(
+                architecture_id=new_architecture.id,
+                module_name=module_name,
+                language='Python',  # 或前端传入 language 字段
+                code=code_stub
+            )
+            db.session.add(module_code)
+
         db.session.commit()
-        
+
         return jsonify({
             'status': 'success',
             'data': {
@@ -418,10 +433,31 @@ def generate_modules():
             ],
             temperature=0.7
         )
-        text_response = response['choices'][0]['message']['content']
+       # text_response = response['choices'][0]['message']['content']
+        text_response = response.choices[0].message.content
+        print("原始返回内容（前300字符）：", text_response[:50])
+
+        # # 清洗 AI 返回内容中的 JSON 数组
+        # import re
+        # match = re.search(r'(\[\s*{[\s\S]*}])', text_response)
+        # if not match:
+        #     raise ValueError("未找到有效 JSON 数组结构")
+        #
+        # clean_json_text = match.group(1)
+
         import json
-        modules = json.loads(text_response)
-        print(text_response)
+
+        # try:
+        #     modules = json.loads(clean_json_text)
+        #    # modules = json.loads(text_response)
+
+        except Exception as e:
+            print("AI 返回内容不是合法 JSON：", text_response)
+            raise ValueError(f"解析 JSON 失败: {str(e)}")
+
+
+       # modules = json.loads(text_response)
+        #print(text_response)
         for module in modules:
             code = module.get('code', '')
             # 从注释中提取语言（默认 Python）

@@ -159,7 +159,7 @@ export default {
       this.moduleCodes = [];
     },
     async generateCode() {
-      if (!this.selectedModule || !this.architecture_id||!this.selectedRequirementId) {
+      if (!this.selectedModule || !this.selectedArchitectureId||!this.selectedRequirementId) {
         ElMessage.warning('请先选择模块和需求')
         return
       }
