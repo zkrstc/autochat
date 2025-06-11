@@ -132,7 +132,13 @@
           password: password.value,
           rememberPassword: rememberPassword.value,
         });
-    
+
+        // 存储到 localStorage
+        localStorage.setItem('user', JSON.stringify({
+          id: response.data.user_id,
+          username: response.data.username
+        }));
+        
         if (response.data.message === "Login successful") {
           router.push('/requirements')
   

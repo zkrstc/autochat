@@ -114,7 +114,7 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and check_password_hash(user.password_hash, password):
-        return jsonify({'message': 'Login successful', 'user_id': user.id}), 200
+        return jsonify({'message': 'Login successful', 'user_name':user.username }), 200
     else:
         return jsonify({'error': 'Invalid credentials'}), 401
 
@@ -251,9 +251,9 @@ def generate_architecture():
     # 获取请求数据
     data = request.get_json()
     requirement_id = data.get('requirement_id')
-    user_id = data.get('user_id')  # 当前用户ID
+    user_name = data.get('user_name')  # 当前用户ID
     
-    if not requirement_id or not user_id:
+    if not requirement_id or not user_name:
         return jsonify({'error': 'Missing requirement_id or user_id', 'status': 400}), 400
     
     # 获取需求文档内容
@@ -307,7 +307,7 @@ def generate_architecture():
         new_architecture = Architecture(
             requirement_id=requirement_id,
             architecture_json=architecture_data,
-            generated_by=user_id,
+            generated_by=user_name,
             created_at=datetime.utcnow()
         )
         

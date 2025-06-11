@@ -255,18 +255,19 @@ export default {
 
             this.isLoading = true;
             try {
-                const userId = this.$store.state.user.id; // 假设用户ID存储在Vuex中????????看这里这里不知道咋整
+                // 获取存储的用户信息
+                const user = JSON.parse(localStorage.getItem('user'));
+                const username = user.username;
+                if (user) {
+                    console.log('当前用户:', user.username);
+                    // 使用 user.username 或 user.id
+                } else {
+                    console.log('用户未登录');
+                }
 
-                const response = await fetch('http://127.0.0.1:5000/api/api/architectures/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.$store.state.token}` // 如果需要认证
-                    },
-                    body: JSON.stringify({
-                        requirement_id: this.selectedRequirement,
-                        user_id: userId
-                    })
+                const response = await axios.post('http://127.0.0.1:5000/api/architectures/generate', {
+                    requirement_id: this.selectedRequirement,
+                    user_name: username
                 });
 
                 const data = await response.json();
