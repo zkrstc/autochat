@@ -185,7 +185,7 @@
         },
 
         async generateTestCases() {
-            if (!this.requirementId) {
+            if (!this.selectedRequirementId) {
                 this.$toast.error('请先选择需求')
                 return
             }
@@ -193,7 +193,7 @@
             this.isGenerating = true
 
             try {
-                const response = await this.$axios.post('http://127.0.0.1:5000/api/test-cases/generate', {
+                const response = await axios.post('http://127.0.0.1:5000/api/test-cases/generate', {
                     requirement_id: this.selectedRequirementId,
                     architecture_id: this.selectedArchitectureId
                 })
@@ -202,11 +202,8 @@
                     throw new Error(response.data.error)
                 }
 
-                this.$toast.success(`成功生成 ${response.data.length} 条测试用例`)
-                this.$emit('test-cases-generated', response.data)
             } catch (error) {
                 console.error('生成测试用例失败:', error)
-                this.$toast.error(`生成测试用例失败: ${error.message}`)
             } finally {
                 this.isGenerating = false
             }

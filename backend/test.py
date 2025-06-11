@@ -516,6 +516,7 @@ def generate_database():
         return jsonify({'error': 'requirement_id is required'}), 400
 
     requirement = Requirement.query.get(requirement_id)
+    print(requirement)
     if not requirement:
         return jsonify({'error': 'Requirement not found'}), 404
 
@@ -525,6 +526,11 @@ def generate_database():
 1. ER图（使用纯文本表示，格式如下示例）
 2. SQL建表语句
 
+⚠️ 请严格遵循以下要求输出：
+    1. **只输出 JSON 数据**，不要包含任何其他描述性语言；
+    2. JSON 的结构必须完全符合下面给出的格式模板；
+    3. 不允许在 JSON 外加任何解释、前缀或后缀文本。
+    4. 不要有任何多于的字符、空格、换行符。
 **ER图格式示例：**
 +-------------+       +-------------+       +-------------+
 |    User     |       |  Product    |       |    Order    |
@@ -556,13 +562,17 @@ def generate_database():
 - 包含必要的注释
 
 请以如下JSON格式返回：
-{{
-  "erd_diagram": "纯文本ER图",
-  "sql_script": "完整的SQL建表语句"
-}}
+[
+    {{
+    "erd_diagram": "纯文本ER图",
+    "sql_script": "完整的SQL建表语句"
+    }}
+]
+
 
 需求内容如下：
 {requirement.content}
+
 """
 
     try:
@@ -572,14 +582,18 @@ def generate_database():
                 {"role": "system", "content": "你是一个专业的数据库架构师，擅长设计关系型数据库。"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=0.7,
+            max_tokens=2048
         )
         
-        result = response['choices'][0]['message']['content']
-        import json
+        result = response.choices[0].message.content
+        print(result)
+        import re
+        result = re.sub(r"^```json|```$", "", result).strip()
+        # 解析 JSON 字符串
         db_design = json.loads(result)
-
-        # 保存到数据库
+        print(db_design)
+        #保存到数据库
         design = DatabaseDesign(
             requirement_id=requirement_id,
             erd_diagram=db_design.get('erd_diagram'),
@@ -589,7 +603,7 @@ def generate_database():
         
         db.session.add(design)
         db.session.commit()
-
+        
         return jsonify({
             'id': design.id,
             'erd_diagram': design.erd_diagram,
@@ -654,63 +668,75 @@ def generate_test_cases():
         return jsonify({'error': 'Requirement not found'}), 404
     if not architecture:
         return jsonify({'error': 'Architecture not found'}), 404
+    # 解析架构JSON获取模块列表
+    architecture_data = json.loads(architecture.architecture_json)
+    modules = architecture_data.get('modules', [])
+    print(modules)
+    print(architecture_data)
+    prompt = f"""
+            你是一个专业的测试工程师。请根据以下信息生成全面的测试用例：
 
+            1. 系统架构模块：
+            {', '.join(modules) if modules else '无明确模块划分'}
+
+            2. 技术栈：
+            前端: {architecture_data.get('technologyStack', {}).get('frontend', '未知')}
+            后端: {architecture_data.get('technologyStack', {}).get('backend', '未知')}
+            数据库: {architecture_data.get('technologyStack', {}).get('database', '未知')}
+
+            3. 架构内容：
+            {architecture.architecture_json}
+
+            要求：
+            1. 为每个主要模块生成测试用例
+            2. 包含正常情况和异常情况的测试用例
+            3. 每个测试用例包含：
+            - 测试类型（单元测试/集成测试/系统测试）
+            - 具体输入数据
+            - 预期输出结果
+            4. 使用如下JSON格式返回：
+
+            ⚠️ 请严格遵循以下要求输出：
+            1. **只输出 JSON 数据**，不要包含任何其他描述性语言；
+            2. JSON 的结构必须完全符合下面给出的格式模板；
+            3. 不允许在 JSON 外加任何解释、前缀或后缀文本。
+            4. 不要有任何多于的字符、空格、换行符。
+            5.测试用例不超过8个
+            [
+            {{
+                "type": "User Module",
+                "input_data": "注册用户：用户名 'alice'，手机号 '1234567890'，密码 '123456'",
+                "expected_output": "注册成功，返回用户ID"
+            }},
+            ...
+            ]
+        """
     try:
-        # 解析架构JSON获取模块列表
-        architecture_data = json.loads(architecture.architecture_json)
-        modules = architecture_data.get('modules', [])
-        
-        prompt = f"""
-你是一个专业的测试工程师。请根据以下信息生成全面的测试用例：
-
-1. 系统架构模块：
-{', '.join(modules) if modules else '无明确模块划分'}
-
-2. 技术栈：
-前端: {architecture_data.get('technologyStack', {}).get('frontend', '未知')}
-后端: {architecture_data.get('technologyStack', {}).get('backend', '未知')}
-数据库: {architecture_data.get('technologyStack', {}).get('database', '未知')}
-
-3. 需求内容：
-{requirement.content}
-
-要求：
-1. 为每个主要模块生成测试用例
-2. 包含正常情况和异常情况的测试用例
-3. 每个测试用例包含：
-   - 测试类型（单元测试/集成测试/系统测试）
-   - 具体输入数据
-   - 预期输出结果
-4. 使用如下JSON格式返回：
-
-[
-  {{
-    "type": "测试板块",
-    "input_data": "具体的输入数据",
-    "expected_output": "预期输出结果"
-  }},
-  ...
-]
-"""
-
         response = client.chat.completions.create(
             model="deepseek-chat",
             messages=[
                 {"role": "system", "content": "你是一个专业的测试工程师，擅长编写各种类型的测试用例。"},
                 {"role": "user", "content": prompt}
             ],
-            temperature=0.7
+            temperature=0.7,
+            max_tokens=2048
         )
-        
-        test_cases = json.loads(response['choices'][0]['message']['content'])
+        result = response.choices[0].message.content
+        print(result)
+
+        import re
+        # result = re.sub(r"^```json|```$", "", result).strip()
+        # 解析 JSON 字符串
+        result = re.sub(r'```json.*?```', '', result, flags=re.DOTALL)
+        test_cases = json.loads(result)
         saved_cases = []
 
         for case in test_cases:
             new_case = TestCase(
                 requirement_id=requirement_id,
-                type=case.get('type', '单元测试'),
                 input_data=case.get('input_data', ''),
                 expected_output=case.get('expected_output', ''),
+                type=case.get('type', '单元测试'),
                 created_at=datetime.utcnow()
             )
             db.session.add(new_case)
