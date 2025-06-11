@@ -270,12 +270,18 @@ def generate_architecture():
     
     # 构建AI提示
     prompt = f"""
-    根据以下需求文档内容，设计一个合理的软件系统架构，包括架构图描述、技术栈和模块划分：
-    
+    你是一名资深软件架构师。请根据以下需求文档内容，设计一个合理的软件系统架构。
+
+    ⚠️ 请严格遵循以下要求输出：
+    1. **只输出 JSON 数据**，不要包含任何其他描述性语言；
+    2. JSON 的结构必须完全符合下面给出的格式模板；
+    3. 不允许在 JSON 外加任何解释、前缀或后缀文本。
+
     需求文档内容：
     {requirement.content}
-    
-    请按照以下JSON格式返回结果：
+
+    请按照以下 JSON 格式返回结果：
+
     {{
         "architectureDiagram": {{
             "description": "架构描述",
@@ -293,6 +299,7 @@ def generate_architecture():
         ]
     }}
     """
+
     
     try:
 
@@ -301,12 +308,12 @@ def generate_architecture():
                 model="deepseek-reasoner",
                 messages=[
                     {"role": "system", "content": "你是一个资深的软件架构师，擅长设计清晰、可扩展的系统架构。"},
-                    {"role": "user", "content": "你是谁"}
+                    {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
                 max_tokens=1000
             )
- 
+        print(response)
             
         # 解析AI响应
         ai_response = response.choices[0].message.content
@@ -323,16 +330,16 @@ def generate_architecture():
         db.session.add(new_architecture)
         db.session.commit()
         
-        # return jsonify({
-        #     'status': 'success',
-        #     'data': {
-        #         'id': new_architecture.id,
-        #         'requirement_id': new_architecture.requirement_id,
-        #         'architecture_json': new_architecture.architecture_json,
-        #         'generated_by': new_architecture.generated_by,
-        #         'created_at': new_architecture.created_at.isoformat()
-        #     }
-        # })
+        return jsonify({
+            'status': 'success',
+            'data': {
+                'id': new_architecture.id,
+                'requirement_id': new_architecture.requirement_id,
+                'architecture_json': new_architecture.architecture_json,
+                'generated_by': new_architecture.generated_by,
+                'created_at': new_architecture.created_at.isoformat()
+            }
+        })
         
     except Exception as e:
         db.session.rollback()
@@ -341,23 +348,6 @@ def generate_architecture():
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
-# # 新增API端点：通过requirement_id获取architecture
-# @app.route('/api/architecture/by_requirement/<int:requirement_id>', methods=['GET'])
-# def get_architecture_by_requirement(requirement_id):
-#     architecture = Architecture.query.filter_by(requirement_id=requirement_id).first()
-#     if not architecture:
-#         return jsonify({
-#             'status': 'error',
-#             'message': 'Architecture not found for this requirement'
-#         }), 404
-    
-#     return jsonify({
-#         'status': 'success',
-#         'data': {
-#             'id': architecture.id,
-#             'requirement_id': architecture.requirement_id
-#         }
-#     })
 
 @app.route('/api/module_code', methods=['GET'])
 def get_module_code():
