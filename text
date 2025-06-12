@@ -1,2 +1,648 @@
+PS C:\Users\ASUS\Desktop\autochat> & F:/Anaconda3/envs/py_eco/python.exe c:/Users/ASUS/Desktop/autochat/backend/test.py
+ * Serving Flask app 'test'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 19:12:06] "OPTIONS /api/login HTTP/1.1" 200 -
+name
+123456
+127.0.0.1 - - [11/Jun/2025 19:12:06] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:06] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:07] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:09] "GET /api/requirements/list HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 19:12:10] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 19:12:10] "GET /api/architectures/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:10] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:12] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:13] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:14] "GET /api/requirements/list HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 19:12:16] "GET /api/architectures/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:16] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 19:12:16] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:20] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:21] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:22] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:23] "GET /api/database_designs?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:31] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:33] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:12:34] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+127.0.0.1 - - [11/Jun/2025 19:12:38] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:12:40] "GET /api/architectures/1 HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:16:48] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jun/2025 19:16:49] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+c:\Users\ASUS\Desktop\autochat\backend\test.py:388: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:389: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+127.0.0.1 - - [11/Jun/2025 19:17:41] "POST /api/modules/generate HTTP/1.1" 500 -
+127.0.0.1 - - [11/Jun/2025 19:18:19] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:18:53] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:18:55] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:19:10] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:19:29] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:20:00] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:20:12] "GET /api/requirements/list HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 19:21:59] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:22:01] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+127.0.0.1 - - [11/Jun/2025 19:22:01] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
 1
-this is the first
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:390: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+127.0.0.1 - - [11/Jun/2025 19:23:00] "POST /api/modules/generate HTTP/1.1" 500 -
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+  File "c:\Users\ASUS\Desktop\autochat\backend\test.py", line 432
+    text_response = response.
+                             ^
+SyntaxError: invalid syntax
+PS C:\Users\ASUS\Desktop\autochat> 
+PS C:\Users\ASUS\Desktop\autochat> & F:/Anaconda3/envs/py_eco/python.exe c:/Users/ASUS/Desktop/autochat/backend/test.py
+ * Serving Flask app 'test'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 19:26:25] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:26:26] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:26:27] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+127.0.0.1 - - [11/Jun/2025 19:26:28] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+1
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:392: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+127.0.0.1 - - [11/Jun/2025 19:27:07] "POST /api/modules/generate HTTP/1.1" 500 -
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 19:27:19] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+1
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:392: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+ChatCompletion(id='f76ec320-6d64-4217-bc5f-4c47d05b07a4', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='[\n  {\n    "name": "User Module",\n    "code": "# Language: JavaScript\\nclass User {\\n  constructor(id, name, email, phone) {\\n    this.id = id;\\n    this.name = name;\\n    this.email = email;\\n    this.phone = phone;\\n  }\\n\\n  createUser() {\\n    // Logic to create user in database\\n  }\\n\\n  updateUser(updatedData) {\\n    // Logic to update user in database\\n  }\\n\\n  deleteUser() {\\n    // Logic to delete user from database\\n  }\\n\\n  getUserById(id) {\\n    // Logic to fetch user by ID\\n  }\\n}"\n  },\n  {\n    "name": "Merchant Module",\n    "code": "# Language: JavaScript\\nclass Merchant {\\n  constructor(id, name, address, contact) {\\n    this.id = id;\\n    this.name = name;\\n    this.address = address;\\n    this.contact = contact;\\n  }\\n\\n  registerMerchant() {\\n    // Logic to register merchant\\n  }\\n\\n  updateMenu(items) {\\n    // Logic to update merchant menu\\n  }\\n\\n  getOrders() {\\n    // Logic to fetch merchant orders\\n  }\\n}"\n  },\n  {\n    "name": "Rider Module",\n    "code": "# Language: JavaScript\\nclass Rider {\\n  constructor(id, name, vehicleType, status) {\\n    this.id = id;\\n    this.name = name;\\n    this.vehicleType = vehicleType;\\n    this.status = status; // available, busy, offline\\n  }\\n\\n  updateStatus(newStatus) {\\n    this.status = newStatus;\\n    // Update in database\\n  }\\n\\n  acceptOrder(orderId) {\\n    // Logic to accept order\\n  }\\n\\n  completeOrder(orderId) {\\n    // Logic to complete order\\n  }\\n}"\n  },\n  {\n    "name": "Order Management Module",\n    "code": "# Language: JavaScript\\nclass Order {\\n  constructor(userId, merchantId, items, deliveryAddress) {\\n    this.id = this.generateOrderId();\\n    this.userId = userId;\\n    this.merchantId = merchantId;\\n    this.items = items;\\n    this.deliveryAddress = deliveryAddress;\\n    this.status = \'pending\';\\n    this.createdAt = new Date();\\n  }\\n\\n  generateOrderId() {\\n    return \'ORD\' + Math.random().toString(36).substr(2, 9);\\n  }\\n\\n  updateStatus(newStatus) {\\n    this.status = newStatus;\\n    // Update in database\\n  }\\n\\n  calculateTotal() {\\n    return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);\\n  }\\n}"\n  },\n  {\n    "name": "Admin Module",\n    "code": "# Language: JavaScript\\nclass Admin {\\n  constructor(username, password) {\\n    this.username = username;\\n    this.password = password;\\n  }\\n\\n  login() {\\n    // Authentication logic\\n  }\\n\\n  getAllUsers() {\\n    // Fetch all users\\n  }\\n\\n  getAllMerchants() {\\n    // Fetch all merchants\\n  }\\n\\n  getAllOrders() {\\n    // Fetch all orders\\n  }\\n\\n  generateReports() {\\n    // Generate system reports\\n  }\\n}"\n  },\n  {\n    "name": "Payment Integration",\n    "code": "# Language: JavaScript\\nclass PaymentService {\\n  constructor(apiKey) {\\n    this.apiKey = apiKey;\\n  }\\n\\n  processPayment(amount, cardDetails) {\\n    // Integration with payment gateway\\n    return new Promise((resolve, reject) => {\\n      // Payment processing logic\\n      resolve({ transactionId: \'TX\' + Math.random().toString(36).substr(2, 9), status: \'success\' });\\n    });\\n  }\\n\\n  refundPayment(transactionId) {\\n    // Refund logic\\n  }\\n}"\n  },\n  {\n    "name": "Map Service Integration",\n    "code": "# Language: JavaScript\\nclass MapService {\\n  constructor(apiKey) {\\n    this.apiKey = apiKey;\\n  }\\n\\n  getDistance(origin, destination) {\\n    return new Promise((resolve, reject) => {\\n      // Call map API to get distance\\n      resolve({ distance: \'5km\', duration: \'15mins\' });\\n    });\\n  }\\n\\n  getRoute(origin, destination) {\\n    return new Promise((resolve, reject) => {\\n      // Call map API to get route\\n      resolve({ polyline: \'encoded_polyline_data\', steps: [] });\\n    });\\n  }\\n}"\n  },\n  {\n    "name": "Push Notification Service",\n    "code": "# Language: JavaScript\\nclass NotificationService {\\n  constructor() {\\n    this.fcmKey = \'YOUR_FCM_KEY\';\\n  }\\n\\n  sendNotification(deviceToken, message) {\\n    // Logic to send push notification\\n    console.log(`Sending notification to ${deviceToken}: ${message}`);\\n    return true;\\n  }\\n\\n  sendBulkNotifications(tokens, message) {\\n    // Bulk notification logic\\n    tokens.forEach(token => this.sendNotification(token, message));\\n  }\\n}"\n  }\n]', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749641240, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=1206, prompt_tokens=512, total_tokens=1718, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=448), prompt_cache_hit_tokens=448, prompt_cache_miss_tokens=64))
+127.0.0.1 - - [11/Jun/2025 19:28:17] "POST /api/modules/generate HTTP/1.1" 200 -
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+  File "c:\Users\ASUS\Desktop\autochat\backend\test.py", line 450
+    created_at=datetime.utcnow()z
+               ^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
+PS C:\Users\ASUS\Desktop\autochat> & F:/Anaconda3/envs/py_eco/python.exe c:/Users/ASUS/Desktop/autochat/backend/test.py
+ * Serving Flask app 'test'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 19:39:41] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+1
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:392: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+ChatCompletion(id='4a8c35ce-7483-4c54-a1cb-56c1c2533d40', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='[\n  {\n    "name": "User Module",\n    "code": "# Language: JavaScript\\nclass User {\\n  constructor(id, name, email, phone) {\\n    this.id = id;\\n    this.name = name;\\n    this.email = email;\\n    this.phone = phone;\\n  }\\n\\n  createUser() {\\n    // Logic to create user in database\\n  }\\n\\n  updateUser() {\\n    // Logic to update user in database\\n  }\\n\\n  deleteUser() {\\n    // Logic to delete user from database\\n  }\\n}"\n  },\n  {\n    "name": "Merchant Module",\n    "code": "# Language: JavaScript\\nclass Merchant {\\n  constructor(id, name, address, contact) {\\n    this.id = id;\\n    this.name = name;\\n    this.address = address;\\n    this.contact = contact;\\n  }\\n\\n  registerMerchant() {\\n    // Logic to register merchant\\n  }\\n\\n  updateMenu() {\\n    // Logic to update merchant menu\\n  }\\n\\n  processOrder() {\\n    // Logic to process customer orders\\n  }\\n}"\n  },\n  {\n    "name": "Rider Module",\n    "code": "# Language: JavaScript\\nclass Rider {\\n  constructor(id, name, vehicle, status) {\\n    this.id = id;\\n    this.name = name;\\n    this.vehicle = vehicle;\\n    this.status = status;\\n  }\\n\\n  acceptOrder() {\\n    // Logic for rider to accept order\\n  }\\n\\n  updateLocation() {\\n    // Logic to update rider location\\n  }\\n\\n  completeDelivery() {\\n    // Logic to complete delivery\\n  }\\n}"\n  },\n  {\n    "name": "Order Management Module",\n    "code": "# Language: JavaScript\\nclass Order {\\n  constructor(id, userId, items, status) {\\n    this.id = id;\\n    this.userId = userId;\\n    this.items = items;\\n    this.status = status;\\n  }\\n\\n  createOrder() {\\n    // Logic to create new order\\n  }\\n\\n  updateStatus() {\\n    // Logic to update order status\\n  }\\n\\n  cancelOrder() {\\n    // Logic to cancel order\\n  }\\n}"\n  },\n  {\n    "name": "Payment Integration",\n    "code": "# Language: JavaScript\\nclass PaymentService {\\n  constructor() {\\n    // Initialize payment gateway\\n  }\\n\\n  processPayment(amount, cardDetails) {\\n    // Logic to process payment\\n  }\\n\\n  refundPayment(transactionId) {\\n    // Logic to process refund\\n  }\\n\\n  getPaymentStatus(transactionId) {\\n    // Logic to check payment status\\n  }\\n}"\n  },\n  {\n    "name": "Map Service Integration",\n    "code": "# Language: JavaScript\\nclass MapService {\\n  constructor() {\\n    // Initialize map API\\n  }\\n\\n  getDistance(origin, destination) {\\n    // Logic to calculate distance\\n  }\\n\\n  getETA(origin, destination) {\\n    // Logic to calculate estimated time\\n  }\\n\\n  getRoute(origin, destination) {\\n    // Logic to get optimal route\\n  }\\n}"\n  }\n]', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749641981, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=715, prompt_tokens=512, total_tokens=1227, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=448), prompt_cache_hit_tokens=448, prompt_cache_miss_tokens=64))
+127.0.0.1 - - [11/Jun/2025 19:40:17] "POST /api/modules/generate HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:42:43] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:42:44] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:42:45] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 200 - 
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+4
+Merchant Module
+127.0.0.1 - - [11/Jun/2025 19:45:00] "GET /api/module_code?architecture_id=4&module_name=Merchant+Module HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jun/2025 19:46:59] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:47:02] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:47:13] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:47:40] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:47:42] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+127.0.0.1 - - [11/Jun/2025 19:47:46] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+1
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:392: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+ChatCompletion(id='81e94967-50dd-4adb-87cd-2842b6cefc02', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='[\n  {\n    "name": "User Module Frontend",\n    "code": "# Language: JavaScript\\nimport Vue from \'vue\';\\nimport axios from \'axios\';\\n\\nexport default {\\n  data() {\\n    return {\\n      users: [],\\n      newUser: {\\n        name: \'\',\\n        email: \'\',\\n        password: \'\'\\n      }\\n    };\\n  },\\n  methods: {\\n    async fetchUsers() {\\n      try {\\n        const response = await axios.get(\'/api/users\');\\n        this.users = response.data;\\n      } catch (error) {\\n        console.error(\'Error fetching users:\', error);\\n      }\\n    },\\n    async createUser() {\\n      try {\\n        const response = await axios.post(\'/api/users\', this.newUser);\\n        this.users.push(response.data);\\n        this.newUser = { name: \'\', email: \'\', password: \'\' };\\n      } catch (error) {\\n        console.error(\'Error creating user:\', error);\\n      }\\n    },\\n    async deleteUser(userId) {\\n      try {\\n        await axios.delete(`/api/users/${userId}`);\\n        this.users = this.users.filter(user => user._id !== userId);\\n      } catch (error) {\\n        console.error(\'Error deleting user:\', error);\\n      }\\n    }\\n  },\\n  created() {\\n    this.fetchUsers();\\n  }\\n};"\n  },\n  {\n    "name": "User Module Backend",\n    "code": "# Language: JavaScript\\nconst express = require(\'express\');\\nconst router = express.Router();\\nconst User = require(\'../models/User\');\\n\\n// Get all users\\nrouter.get(\'/\', async (req, res) => {\\n  try {\\n    const users = await User.find();\\n    res.json(users);\\n  } catch (err) {\\n    res.status(500).json({ message: err.message });\\n  }\\n});\\n\\n// Create a new user\\nrouter.post(\'/\', async (req, res) => {\\n  const user = new User({\\n    name: req.body.name,\\n    email: req.body.email,\\n    password: req.body.password\\n  });\\n\\n  try {\\n    const newUser = await user.save();\\n    res.status(201).json(newUser);\\n  } catch (err) {\\n    res.status(400).json({ message: err.message });\\n  }\\n});\\n\\n// Delete a user\\nrouter.delete(\'/:id\', async (req, res) => {\\n  try {\\n    await User.findByIdAndDelete(req.params.id);\\n    res.json({ message: \'User deleted\' });\\n  } catch (err) {\\n    res.status(500).json({ message: err.message });\\n  }\\n});\\n\\nmodule.exports = router;"\n  }\n]', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749642467, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=657, prompt_tokens=537, total_tokens=1194, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=128), prompt_cache_hit_tokens=128, prompt_cache_miss_tokens=409))
+127.0.0.1 - - [11/Jun/2025 19:48:23] "POST /api/modules/generate HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:49:12] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:49:13] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:49:14] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+127.0.0.1 - - [11/Jun/2025 19:49:24] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:49:24] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:49:25] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+4
+Merchant Module
+127.0.0.1 - - [11/Jun/2025 19:49:26] "GET /api/module_code?architecture_id=4&module_name=Merchant+Module HTTP/1.1" 404 -
+4
+Rider Module
+127.0.0.1 - - [11/Jun/2025 19:49:28] "GET /api/module_code?architecture_id=4&module_name=Rider+Module HTTP/1.1" 404 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:49:29] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+  File "c:\Users\ASUS\Desktop\autochat\backend\test.py", line 423
+    """
+       ^
+SyntaxError: f-string: empty expression not allowed
+PS C:\Users\ASUS\Desktop\autochat> & F:/Anaconda3/envs/py_eco/python.exe c:/Users/ASUS/Desktop/autochat/backend/test.py
+ * Serving Flask app 'test'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 19:57:29] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 19:57:32] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:57:33] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+127.0.0.1 - - [11/Jun/2025 19:57:34] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+1
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:392: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+ChatCompletion(id='51575639-a613-48bf-927e-b35019584bbd', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='[\n  {\n    "name": "User Module Frontend",\n    "code": "# Language: JavaScript\\nimport { createApp } from \'vue\';\\nimport App from \'./App.vue\';\\nimport router from \'./router\';\\nimport store from \'./store\';\\n\\ncreateApp(App).use(store).use(router).mount(\'#app\');"\n  },\n  {\n    "name": "User Module Frontend",\n    "code": "# Language: HTML\\n<template>\\n  <div id=\\"app\\">\\n    <router-view />\\n  </div>\\n</template>\\n\\n<script>\\nexport default {\\n  name: \'App\'\\n};\\n</script>\\n\\n<style>\\n#app {\\n  font-family: Avenir, Helvetica, Arial, sans-serif;\\n  -webkit-font-smoothing: antialiased;\\n  -moz-osx-font-smoothing: grayscale;\\n  text-align: center;\\n  color: #2c3e50;\\n  margin-top: 60px;\\n}\\n</style>"\n  },\n  {\n    "name": "User Module Backend",\n    "code": "# Language: JavaScript\\nconst express = require(\'express\');\\nconst mongoose = require(\'mongoose\');\\nconst bodyParser = require(\'body-parser\');\\n\\nconst app = express();\\n\\napp.use(bodyParser.json());\\n\\nmongoose.connect(\'mongodb://localhost:27017/userDB\', { useNewUrlParser: true, useUnifiedTopology: true });\\n\\nconst userSchema = new mongoose.Schema({\\n  username: String,\\n  email: String,\\n  password: String\\n});\\n\\nconst User = mongoose.model(\'User\', userSchema);\\n\\napp.post(\'/api/users\', async (req, res) => {\\n  try {\\n    const newUser = new User(req.body);\\n    await newUser.save();\\n    res.status(201).send(newUser);\\n  } catch (error) {\\n    res.status(400).send(error);\\n  }\\n});\\n\\nconst PORT = process.env.PORT || 3000;\\napp.listen(PORT, () => {\\n  console.log(`Server is running on port ${PORT}`);\\n});"\n  },\n  {\n    "name": "User Module Backend",\n    "code": "# Language: JavaScript\\napp.get(\'/api/users\', async (req, res) => {\\n  try {\\n    const users = await User.find({});\\n    res.send(users);\\n  } catch (error) {\\n    res.status(500).send(error);\\n  }\\n});\\n\\napp.get(\'/api/users/:id\', async (req, res) => {\\n  try {\\n    const user = await User.findById(req.params.id);\\n    if (!user) {\\n      return res.status(404).send();\\n    }\\n    res.send(user);\\n  } catch (error) {\\n    res.status(500).send(error);\\n  }\\n});"\n  },\n  {\n    "name": "User Module Backend",\n    "code": "# Language: JavaScript\\napp.patch(\'/api/users/:id\', async (req, res) => {\\n  try {\\n    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });\\n    if (!user) {\\n      return res.status(404).send();\\n    }\\n    res.send(user);\\n  } catch (error) {\\n    res.status(400).send(error);\\n  }\\n});\\n\\napp.delete(\'/api/users/:id\', async (req, res) => {\\n  try {\\n    const user = await User.findByIdAndDelete(req.params.id);\\n    if (!user) {\\n      return res.status(404).send();\\n    }\\n    res.send(user);\\n  } catch (error) {\\n    res.status(500).send(error);\\n  }\\n});"\n  }\n]', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749643115, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=888, prompt_tokens=560, total_tokens=1448, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=512), prompt_cache_hit_tokens=512, prompt_cache_miss_tokens=48))
+127.0.0.1 - - [11/Jun/2025 19:59:21] "POST /api/modules/generate HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 19:59:21] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 404 - 
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+ * Detected change in 'c:\\Users\\ASUS\\Desktop\\autochat\\backend\\test.py', reloading
+ * Restarting with stat
+  File "c:\Users\ASUS\Desktop\autochat\backend\test.py", line 439
+    text_response = response[]
+                             ^
+SyntaxError: invalid syntax
+PS C:\Users\ASUS\Desktop\autochat> & F:/Anaconda3/envs/py_eco/python.exe c:/Users/ASUS/Desktop/autochat/backend/test.py
+ * Serving Flask app 'test'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 137-413-997
+127.0.0.1 - - [11/Jun/2025 20:02:15] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+1
+4
+User Module
+c:\Users\ASUS\Desktop\autochat\backend\test.py:391: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:392: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture=Architecture.query.get(architecture_id)
+ChatCompletion(id='383ded2d-e1c9-40db-9523-c7fac4e8646d', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='[\n  {\n    "name": "User Module",\n    "code": "# Language: JavaScript\\nimport express from \'express\';\\nimport mongoose from \'mongoose\';\\n\\nconst userSchema = new mongoose.Schema({\\n  username: { type: String, required: true, unique: true },\\n  email: { type: String, required: true, unique: true },\\n  password: { type: String, required: true },\\n  role: { type: String, enum: [\'user\', \'admin\'], default: \'user\' },\\n  createdAt: { type: Date, default: Date.now }\\n});\\n\\nconst User = mongoose.model(\'User\', userSchema);\\n\\nconst router = express.Router();\\n\\nrouter.post(\'/register\', async (req, res) => {\\n  try {\\n    const { username, email, password } = req.body;\\n    const user = new User({ username, email, password });\\n    await user.save();\\n    res.status(201).json({ message: \'User registered successfully\' });\\n  } catch (error) {\\n    res.status(400).json({ error: error.message });\\n  }\\n});\\n\\nrouter.post(\'/login\', async (req, res) => {\\n  try {\\n    const { email, password } = req.body;\\n    const user = await User.findOne({ email });\\n    if (!user || user.password !== password) {\\n      throw new Error(\'Invalid credentials\');\\n    }\\n    res.json({ message: \'Login successful\', user });\\n  } catch (error) {\\n    res.status(401).json({ error: error.message });\\n  }\\n});\\n\\nexport default router;"\n  },\n  {\n    "name": "User Module",\n    "code": "# Language: Vue.js\\n<template>\\n  <div>\\n    <h2>User Registration</h2>\\n    <form @submit.prevent=\\"register\\">\\n      <input v-model=\\"username\\" placeholder=\\"Username\\" required>\\n      <input v-model=\\"email\\" type=\\"email\\" placeholder=\\"Email\\" required>\\n      <input v-model=\\"password\\" type=\\"password\\" placeholder=\\"Password\\" required>\\n      <button type=\\"submit\\">Register</button>\\n    </form>\\n\\n    <h2>User Login</h2>\\n    <form @submit.prevent=\\"login\\">\\n      <input v-model=\\"loginEmail\\" type=\\"email\\" placeholder=\\"Email\\" required>\\n      <input v-model=\\"loginPassword\\" type=\\"password\\" placeholder=\\"Password\\" required>\\n      <button type=\\"submit\\">Login</button>\\n    </form>\\n  </div>\\n</template>\\n\\n<script>\\nexport default {\\n  data() {\\n    return {\\n      username: \'\',\\n      email: \'\',\\n      password: \'\',\\n      loginEmail: \'\',\\n      loginPassword: \'\'\\n    };\\n  },\\n  methods: {\\n    async register() {\\n      try {\\n        const response = await fetch(\'/api/users/register\', {\\n          method: \'POST\',\\n          headers: { \'Content-Type\': \'application/json\' },\\n          body: JSON.stringify({\\n            username: this.username,\\n            email: this.email,\\n            password: this.password\\n          })\\n        });\\n        const data = await response.json();\\n        alert(data.message);\\n      } catch (error) {\\n        alert(error.message);\\n      }\\n    },\\n    async login() {\\n      try {\\n        const response = await fetch(\'/api/users/login\', {\\n          method: \'POST\',\\n          headers: { \'Content-Type\': \'application/json\' },\\n          body: JSON.stringify({\\n            email: this.loginEmail,\\n            password: this.loginPassword\\n          })\\n        });\\n        const data = await response.json();\\n        alert(data.message);\\n        this.$emit(\'user-logged-in\', data.user);\\n      } catch (error) {\\n        alert(error.message);\\n      }\\n    }\\n  }\\n};\\n</script>"\n  },\n  {\n    "name": "User Module",\n    "code": "# Language: CSS\\nform {\\n  display: flex;\\n  flex-direction: column;\\n  max-width: 400px;\\n  margin: 20px auto;\\n  padding: 20px;\\n  border: 1px solid #ddd;\\n  border-radius: 5px;\\n}\\n\\ninput {\\n  margin: 10px 0;\\n  padding: 8px;\\n  border: 1px solid #ccc;\\n  border-radius: 4px;\\n}\\n\\nbutton {\\n  padding: 10px;\\n  background-color: #42b983;\\n  color: white;\\n  border: none;\\n  border-radius: 4px;\\n  cursor: pointer;\\n}\\n\\nbutton:hover {\\n  background-color: #369f6b;\\n}\\n\\nh2 {\\n  text-align: center;\\n  color: #2c3e50;\\n}"\n  }\n]', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749643458, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=1154, prompt_tokens=573, total_tokens=1727, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=512), prompt_cache_hit_tokens=512, prompt_cache_miss_tokens=61))
+127.0.0.1 - - [11/Jun/2025 20:05:14] "POST /api/modules/generate HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 20:05:14] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 200 - 
+4
+Merchant Module
+127.0.0.1 - - [11/Jun/2025 20:06:39] "GET /api/module_code?architecture_id=4&module_name=Merchant+Module HTTP/1.1" 404 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 20:06:41] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 200 - 
+127.0.0.1 - - [11/Jun/2025 20:06:57] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:06:58] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:06:59] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:01] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:02] "GET /api/architectures/1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 20:07:02] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 20:07:02] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:03] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:04] "GET /api/database_designs?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:05] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:06] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 20:07:08] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:11] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:12] "GET /api/architectures/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:07:15] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:13:10] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:13:12] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:09] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:09] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:10] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:11] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:11] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:12] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:14:12] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:22:51] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:22:54] "OPTIONS /api/login HTTP/1.1" 200 -
+name
+123456
+127.0.0.1 - - [11/Jun/2025 20:22:54] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:22:54] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:23:01] "OPTIONS /api/login HTTP/1.1" 200 -
+name
+123456
+127.0.0.1 - - [11/Jun/2025 20:23:01] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:23:01] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:23:24] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:09] "OPTIONS /api/login HTTP/1.1" 200 -
+name
+123456
+127.0.0.1 - - [11/Jun/2025 20:42:09] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:09] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:10] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:10] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:11] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:11] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:12] "GET /api/requirements/list HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 20:42:14] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:14] "GET /api/architectures/1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 20:42:14] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:15] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:16] "GET /api/database_designs?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:17] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:18] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 20:42:20] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 200 - 
+127.0.0.1 - - [11/Jun/2025 20:42:21] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:23] "GET /api/architectures/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:42:26] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:02] "OPTIONS /api/login HTTP/1.1" 200 -
+name
+123456
+127.0.0.1 - - [11/Jun/2025 20:47:02] "POST /api/login HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:02] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:19] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:21] "GET /api/architectures/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:23] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:25] "GET /api/architectures/1 HTTP/1.1" 200 -
+4
+User Module
+127.0.0.1 - - [11/Jun/2025 20:47:26] "GET /api/module_code?architecture_id=4&module_name=User+Module HTTP/1.1" 200 - 
+4
+Rider Module
+127.0.0.1 - - [11/Jun/2025 20:47:27] "GET /api/module_code?architecture_id=4&module_name=Rider+Module HTTP/1.1" 404 -
+4
+Merchant Module
+127.0.0.1 - - [11/Jun/2025 20:47:28] "GET /api/module_code?architecture_id=4&module_name=Merchant+Module HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jun/2025 20:47:29] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:32] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:36] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:37] "GET /api/database_designs?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:41] "GET /api/requirements/list HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 20:47:43] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:47:43] "GET /api/architectures/1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 20:47:43] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:48:03] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:54:37] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:54:41] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:54:42] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:54:43] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:54:43] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:54:59] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:03] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:12] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:13] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:13] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:14] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:14] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:15] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:16] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:16] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:17] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:17] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:18] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:18] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:55:20] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:59:15] "OPTIONS /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:59:15] "POST /api/requirements HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jun/2025 20:59:15] "GET /api/requirements HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:59:17] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:59:19] "GET /api/architectures/2 HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jun/2025 20:59:21] "OPTIONS /api/architectures/generate HTTP/1.1" 200 -
+c:\Users\ASUS\Desktop\autochat\backend\test.py:267: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+ChatCompletion(id='df4b6b0c-7a33-40e4-aba7-6cf434fcd686', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='{\n    "architectureDiagram": {\n        "description": "分层架构，包含用户端、商家端、管理员端，前后端分离设计",\n        "diagram": "User -> Frontend -> API Gateway -> [AuthService, SearchService, BookingService, PaymentService] -> Database"\n    },\n    "technologyStack": {\n        "frontend": "Vue.js, HTML5, CSS3, JavaScript",\n        "backend": "Node.js, Express.js, Python",\n        "database": "MySQL, MongoDB"\n    },\n    "modules": [\n        "用户认证模块",\n        "搜索与推荐模块",\n        "酒店预订模块",\n        "机票/车票预订模块",\n        "景点推荐模块",\n        "商家管理模块",\n        "订单管理模块",\n        "管理员后台模块"\n    ]\n}', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749646761, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=170, prompt_tokens=476, total_tokens=646, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=64), prompt_cache_hit_tokens=64, prompt_cache_miss_tokens=412))
+{
+    "architectureDiagram": {
+        "description": "分层架构，包含用户端、商家端、管理员端，前后端分离设计",
+        "diagram": "User -> Frontend -> API Gateway -> [AuthService, SearchService, BookingService, PaymentService] -> Database"
+    },
+    "technologyStack": {
+        "frontend": "Vue.js, HTML5, CSS3, JavaScript",
+        "backend": "Node.js, Express.js, Python",
+        "database": "MySQL, MongoDB"
+    },
+    "modules": [
+        "用户认证模块",
+        "搜索与推荐模块",
+        "酒店预订模块",
+        "机票/车票预订模块",
+        "景点推荐模块",
+        "商家管理模块",
+        "订单管理模块",
+        "管理员后台模块"
+    ]
+}
+127.0.0.1 - - [11/Jun/2025 20:59:36] "POST /api/architectures/generate HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:59:52] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 20:59:54] "GET /api/architectures/2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:00:00] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:00:02] "GET /api/architectures/2 HTTP/1.1" 200 -
+5
+用户认证模块
+127.0.0.1 - - [11/Jun/2025 21:00:04] "GET /api/module_code?architecture_id=5&module_name=用户认证模块 HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jun/2025 21:00:06] "OPTIONS /api/modules/generate HTTP/1.1" 200 -
+2
+5
+用户认证模块
+ChatCompletion(id='e115ea36-04d8-4898-8785-4728ef1980c8', choices=[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='[\n  {\n    "name": "用户认证模块",\n    "code": "# Language: JavaScript\\nimport axios from \'axios\';\\n\\nexport default {\\n  methods: {\\n    async login(username, password) {\\n      try {\\n        const response = await axios.post(\'/api/auth/login\', { username, password });\\n        localStorage.setItem(\'token\', response.data.token);\\n        return true;\\n      } catch (error) {\\n        console.error(\'Login failed:\', error);\\n        return false;\\n      }\\n    },\\n    async register(userData) {\\n      try {\\n        await axios.post(\'/api/auth/register\', userData);\\n        return true;\\n      } catch (error) {\\n        console.error(\'Registration failed:\', error);\\n        return false;\\n      }\\n    },\\n    logout() {\\n      localStorage.removeItem(\'token\');\\n    },\\n    isAuthenticated() {\\n      return !!localStorage.getItem(\'token\');\\n    }\\n  }\\n};"\n  },\n  {\n    "name": "用户认证模块",\n    "code": "# Language: Python\\nfrom flask import Flask, request, jsonify\\nfrom flask_jwt_extended import JWTManager, create_access_token, jwt_required\\nimport hashlib\\n\\napp = Flask(__name__)\\napp.config[\'JWT_SECRET_KEY\'] = \'your-secret-key\'\\njwt = JWTManager(app)\\n\\n# Mock database\\nusers = {}\\n\\n@app.route(\'/api/auth/register\', methods=[\'POST\'])\\ndef register():\\n    data = request.get_json()\\n    username = data.get(\'username\')\\n    password = hashlib.sha256(data.get(\'password\').encode()).hexdigest()\\n    \\n    if username in users:\\n        return jsonify({\'message\': \'User already exists\'}), 400\\n    \\n    users[username] = {\'password\': password, \'data\': data}\\n    return jsonify({\'message\': \'User registered successfully\'}), 201\\n\\n@app.route(\'/api/auth/login\', methods=[\'POST\'])\\ndef login():\\n    data = request.get_json()\\n    username = data.get(\'username\')\\n    password = hashlib.sha256(data.get(\'password\').encode()).hexdigest()\\n    \\n    if username not in users or users[username][\'password\'] != password:\\n        return jsonify({\'message\': \'Invalid credentials\'}), 401\\n    \\n    access_token = create_access_token(identity=username)\\n    return jsonify({\'token\': access_token}), 200\\n\\n@app.route(\'/api/auth/protected\', methods=[\'GET\'])\\n@jwt_required()\\ndef protected():\\n    return jsonify({\'message\': \'This is a protected route\'}), 200"\n  },\n  {\n    "name": "用户认证模块",\n    "code": "# Language: JavaScript\\nconst express = require(\'express\');\\nconst jwt = require(\'jsonwebtoken\');\\nconst bcrypt = require(\'bcrypt\');\\nconst router = express.Router();\\n\\nconst users = [];\\nconst SECRET_KEY = \'your-secret-key\';\\n\\nrouter.post(\'/register\', async (req, res) => {\\n  try {\\n    const { username, password } = req.body;\\n    const hashedPassword = await bcrypt.hash(password, 10);\\n    users.push({ username, password: hashedPassword });\\n    res.status(201).send(\'User registered successfully\');\\n  } catch (error) {\\n    res.status(500).send(\'Error registering user\');\\n  }\\n});\\n\\nrouter.post(\'/login\', async (req, res) => {\\n  const { username, password } = req.body;\\n  const user = users.find(u => u.username === username);\\n  \\n  if (!user || !(await bcrypt.compare(password, user.password))) {\\n    return res.status(401).send(\'Invalid credentials\');\\n  }\\n  \\n  const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: \'1h\' });\\n  res.json({ token });\\n});\\n\\nrouter.get(\'/protected\', authenticateToken, (req, res) => {\\n  res.send(\'This is a protected route\');\\n});\\n\\nfunction authenticateToken(req, res, next) {\\n  const authHeader = req.headers[\'authorization\'];\\n  const token = authHeader && authHeader.split(\' \')[1];\\n  \\n  if (!token) return res.sendStatus(401);\\n  \\n  jwt.verify(token, SECRET_KEY, (err, user) => {\\n    if (err) return res.sendStatus(403);\\n    req.user = user;\\n    next();\\n  });\\n}\\n\\nmodule.exports = router;"\n  }\n]', refusal=None, role='assistant', annotations=None, audio=None, function_call=None, tool_calls=None))], created=1749646806, model='deepseek-chat', object='chat.completion', service_tier=None, system_fingerprint='fp_8802369eaa_prod0425fp8', usage=CompletionUsage(completion_tokens=1084, prompt_tokens=450, total_tokens=1534, completion_tokens_details=None, prompt_tokens_details=PromptTokensDetails(audio_tokens=None, cached_tokens=128), prompt_cache_hit_tokens=128, prompt_cache_miss_tokens=322))     
+127.0.0.1 - - [11/Jun/2025 21:00:58] "POST /api/modules/generate HTTP/1.1" 200 -
+5
+用户认证模块
+127.0.0.1 - - [11/Jun/2025 21:00:58] "GET /api/module_code?architecture_id=5&module_name=用户认证模块 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:01:10] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:01:12] "GET /api/database_designs?requirement_id=2 HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jun/2025 21:01:13] "OPTIONS /api/database/generate HTTP/1.1" 200 -
+c:\Users\ASUS\Desktop\autochat\backend\test.py:544: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+<Requirement 2>
+```json
+{
+    "erd_diagram": "+-------------+       +-------------+       +-------------+\n|    User     |       |   Hotel    |       |   Booking   |\n+-------------+       +-------------+       +-------------+\n| id (PK)     |       | id (PK)     |       | id (PK)     |\n| name        |       | name        |       | user_id (FK)|\n| email       |       | address     |       | hotel_id (FK)|\n| phone       |       | city        |       | check_in    |\n| password    |       | price       |       | check_out   |\n+-------------+       +-------------+       | status      |\n      |         
+            |              | total       |\n      |                     |              +-------------+\n      |                     |                    |\n      |                     +----------+         |\n      |                   
+             |         |\n      v                                v         v\n+--------------------------+-----------------------------+\n|      Review             |         Flight              |\n+--------------------------+-----------------------------+\n| id (PK)                 | id (PK)                    |\n| user_id (FK)            | flight_number              |\n| hotel_id (FK)           | departure_city             |\n| rating                  | arrival_city               |\n| comment                 | departure_time             |\n+--------------------------+ price                      |\n                                   +-----------------------------+",
+    "sql_script": "CREATE TABLE User (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    name VARCHAR(100) NOT NULL,\n    email VARCHAR(100) UNIQUE NOT NULL,\n    phone VARCHAR(20) UNIQUE NOT NULL,\n    password VARCHAR(255) NOT NULL,\n    INDEX idx_email (email),\n    INDEX idx_phone (phone)\n);\n\nCREATE TABLE Hotel (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    name VARCHAR(100) NOT NULL,\n    address VARCHAR(255) NOT NULL,\n    city VARCHAR(50) NOT NULL,\n    price DECIMAL(10, 2) NOT NULL,\n    INDEX idx_city (city)\n);\n\nCREATE TABLE Booking (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    user_id INT NOT NULL,\n    hotel_id INT NOT NULL,\n    check_in DATE NOT NULL,\n    check_out DATE NOT NULL,\n    status VARCHAR(20) NOT NULL,\n    total DECIMAL(10, 2) NOT NULL,\n    FOREIGN KEY (user_id) REFERENCES User(id),\n    FOREIGN KEY (hotel_id) REFERENCES Hotel(id),\n    INDEX idx_user_id (user_id),\n    INDEX idx_hotel_id (hotel_id)\n);\n\nCREATE TABLE Review (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    user_id INT NOT NULL,\n    hotel_id INT NOT NULL,\n    rating INT NOT NULL,\n    comment TEXT,\n    FOREIGN KEY (user_id) REFERENCES User(id),\n    FOREIGN KEY (hotel_id) REFERENCES Hotel(id),\n    INDEX idx_hotel_id (hotel_id)\n);\n\nCREATE TABLE Flight (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    flight_number VARCHAR(20) NOT NULL,\n    departure_city VARCHAR(50) NOT NULL,\n    arrival_city VARCHAR(50) NOT NULL,\n    departure_time DATETIME NOT NULL,\n    price DECIMAL(10, 2) NOT NULL,\n    INDEX idx_departure_city (departure_city),\n    INDEX idx_arrival_city (arrival_city)\n);"
+}
+```
+{'erd_diagram': '+-------------+       +-------------+       +-------------+\n|    User     |       |   Hotel    |       |   Booking   |\n+-------------+       +-------------+       +-------------+\n| id (PK)     |       | id (PK)     |       | id (PK)     |\n| name        |       | name        |       | user_id (FK)|\n| email       |       | address     |       | hotel_id (FK)|\n| phone       |       | city        |       | check_in    |\n| password    |       | price       |       | check_out   |\n+-------------+       +-------------+       | status      |\n      |            
+         |              | total       |\n      |                     |              +-------------+\n      |         
+            |                    |\n      |                     +----------+         |\n      |                      
+          |         |\n      v                                v         v\n+--------------------------+-----------------------------+\n|      Review             |         Flight              |\n+--------------------------+-----------------------------+\n| id (PK)                 | id (PK)                    |\n| user_id (FK)            | flight_number              |\n| hotel_id (FK)           | departure_city             |\n| rating                  | arrival_city               |\n| comment                 | departure_time             |\n+--------------------------+ price                      |\n                                   +-----------------------------+', 'sql_script': 'CREATE TABLE User (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    name VARCHAR(100) NOT NULL,\n    email VARCHAR(100) UNIQUE NOT NULL,\n    phone VARCHAR(20) UNIQUE NOT NULL,\n    password VARCHAR(255) NOT NULL,\n    INDEX idx_email (email),\n    INDEX idx_phone (phone)\n);\n\nCREATE TABLE Hotel (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    name VARCHAR(100) NOT NULL,\n    address VARCHAR(255) NOT NULL,\n    city VARCHAR(50) NOT NULL,\n    price DECIMAL(10, 2) NOT NULL,\n    INDEX idx_city (city)\n);\n\nCREATE TABLE Booking (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    user_id INT NOT NULL,\n    hotel_id INT NOT NULL,\n    check_in DATE NOT NULL,\n    check_out DATE NOT NULL,\n    status VARCHAR(20) NOT NULL,\n    total DECIMAL(10, 2) NOT NULL,\n    FOREIGN KEY (user_id) REFERENCES User(id),\n    FOREIGN KEY (hotel_id) REFERENCES Hotel(id),\n    INDEX idx_user_id (user_id),\n    INDEX idx_hotel_id (hotel_id)\n);\n\nCREATE TABLE Review (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    user_id INT NOT NULL,\n    hotel_id INT NOT NULL,\n    rating INT NOT NULL,\n    comment TEXT,\n    FOREIGN KEY (user_id) REFERENCES User(id),\n    FOREIGN KEY (hotel_id) REFERENCES Hotel(id),\n    INDEX idx_hotel_id (hotel_id)\n);\n\nCREATE TABLE Flight (\n    id INT AUTO_INCREMENT PRIMARY KEY,\n    flight_number VARCHAR(20) NOT NULL,\n    departure_city VARCHAR(50) NOT NULL,\n    arrival_city VARCHAR(50) NOT NULL,\n    departure_time DATETIME NOT NULL,\n    price DECIMAL(10, 2) NOT NULL,\n    INDEX idx_departure_city (departure_city),\n    INDEX idx_arrival_city (arrival_city)\n);'}
+127.0.0.1 - - [11/Jun/2025 21:01:55] "POST /api/database/generate HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:02] "GET /api/requirements/list HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:04] "GET /api/database_designs?requirement_id=2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:10] "GET /api/requirements/list HTTP/1.1" 200 -
+[]
+127.0.0.1 - - [11/Jun/2025 21:02:11] "GET /api/test_cases?requirement_id=2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:11] "GET /api/architectures/2 HTTP/1.1" 200 -
+[]
+127.0.0.1 - - [11/Jun/2025 21:02:11] "GET /api/test_cases?requirement_id=2 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 21:02:14] "GET /api/architectures/1 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:14] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+[<TestCase 8>, <TestCase 9>, <TestCase 10>, <TestCase 11>, <TestCase 12>, <TestCase 13>, <TestCase 14>, <TestCase 15>]
+127.0.0.1 - - [11/Jun/2025 21:02:14] "GET /api/test_cases?requirement_id=1 HTTP/1.1" 200 -
+[]
+127.0.0.1 - - [11/Jun/2025 21:02:15] "GET /api/test_cases?requirement_id=2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:15] "GET /api/architectures/2 HTTP/1.1" 200 -
+[]
+127.0.0.1 - - [11/Jun/2025 21:02:15] "GET /api/test_cases?requirement_id=2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:16] "OPTIONS /api/test-cases/generate HTTP/1.1" 200 -
+c:\Users\ASUS\Desktop\autochat\backend\test.py:690: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  requirement = Requirement.query.get(requirement_id)
+c:\Users\ASUS\Desktop\autochat\backend\test.py:691: LegacyAPIWarning: The Query.get() method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is now available as Session.get() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  architecture = Architecture.query.get(architecture_id)
+['用户认证模块', '搜索与推荐模块', '酒店预订模块', '机票/车票预订模块', '景点推荐模块', '商家管理模块', '订单管理模块', '管理员后台模块']
+{'architectureDiagram': {'description': '分层架构，包含用户端、商家端、管理员端，前后端分离设计', 'diagram': 'User -> Frontend -> API Gateway -> [AuthService, SearchService, BookingService, PaymentService] -> Database'}, 'technologyStack': {'frontend': 'Vue.js, HTML5, CSS3, JavaScript', 'backend': 'Node.js, Express.js, Python', 'database': 'MySQL, MongoDB'}, 'modules': ['用户认证模块', '搜索与推荐模块', '酒店预订模块', '机票/车票预订模块', '景点推荐模块', '商家管 理模块', '订单管理模块', '管理员后台模块']}
+[
+    {
+        "type": "用户认证模块",
+        "input_data": "注册用户：用户名 'alice'，手机号 '1234567890'，密码 '123456'",
+        "expected_output": "注册成功，返回用户ID"
+    },
+    {
+        "type": "用户认证模块",
+        "input_data": "登录用户：用户名 'alice'，密码 '123456'",
+        "expected_output": "登录成功，返回token"
+    },
+    {
+        "type": "搜索与推荐模块",
+        "input_data": "搜索关键词 '北京酒店'",
+        "expected_output": "返回北京相关的酒店列表"
+    },
+    {
+        "type": "酒店预订模块",
+        "input_data": "预订酒店：酒店ID '123'，入住日期 '2023-10-01'，离店日期 '2023-10-03'",
+        "expected_output": "预订成功，返回订单ID"
+    },
+    {
+        "type": "机票/车票预订模块",
+        "input_data": "预订机票：航班号 'CA123'，出发日期 '2023-10-01'",
+        "expected_output": "预订成功，返回订单ID"
+    },
+    {
+        "type": "景点推荐模块",
+        "input_data": "获取景点推荐：城市 '北京'",
+        "expected_output": "返回北京相关的景点列表"
+    },
+    {
+        "type": "订单管理模块",
+        "input_data": "查询订单：订单ID '123456'",
+        "expected_output": "返回订单详情"
+    },
+    {
+        "type": "管理员后台模块",
+        "input_data": "管理员登录：用户名 'admin'，密码 'admin123'",
+        "expected_output": "登录成功，返回管理员token"
+    }
+]
+127.0.0.1 - - [11/Jun/2025 21:02:37] "POST /api/test-cases/generate HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:48] "GET /api/requirements/list HTTP/1.1" 200 -
+[<TestCase 16>, <TestCase 17>, <TestCase 18>, <TestCase 19>, <TestCase 20>, <TestCase 21>, <TestCase 22>, <TestCase 23>]
+127.0.0.1 - - [11/Jun/2025 21:02:49] "GET /api/test_cases?requirement_id=2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:49] "GET /api/architectures/2 HTTP/1.1" 200 -
+[<TestCase 16>, <TestCase 17>, <TestCase 18>, <TestCase 19>, <TestCase 20>, <TestCase 21>, <TestCase 22>, <TestCase 23>]
+127.0.0.1 - - [11/Jun/2025 21:02:49] "GET /api/test_cases?requirement_id=2 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jun/2025 21:02:52] "GET /api/requirements/list HTTP/1.1" 200 -

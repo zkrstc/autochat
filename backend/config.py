@@ -1,6 +1,6 @@
 API_CONFIG = {
 
-    "api_key": "sk-b163740a671f478db5d1736d6a352af9",
+    "api_key": "sk-2bef5be439b84577b84682f282ac6e22",
 
     "base_url": "https://api.deepseek.com"
 

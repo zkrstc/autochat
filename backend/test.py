@@ -108,6 +108,23 @@ class VersionHistory(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
+
+@app.route('/api/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    messages = data.get('messages', [])
+    
+    try:
+        completion = client.chat.completions.create(
+            model="deepseek-chat",  # 或 "gpt-4"
+            messages=messages
+        )
+        reply = completion.choices[0].message.content
+        return jsonify({'reply': reply})
+    except Exception as e:
+        return jsonify({'reply': f"后端出错: {str(e)}"}), 500
+    
+
 # 登录接口
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -286,7 +303,7 @@ def generate_architecture():
     {{
         "architectureDiagram": {{
             "description": "架构描述",
-            "diagram": "ASCII架构图"
+            "diagram": "ASCII架构图"(给出架构图，不要只写ASCII架构图几个字)
         }},
         "technologyStack": {{
             "frontend": "前端技术栈",
@@ -320,6 +337,13 @@ def generate_architecture():
         ai_response = response.choices[0].message.content
         
         print(ai_response)
+        # 查询相同 requirement_id 的记录
+        existing_architecture = Architecture.query.filter_by(requirement_id=requirement_id).first()
+
+        if existing_architecture:
+            # 只清空 architecture_json 字段
+            existing_architecture.architecture_json = None  # 或者设为空字符串 ""
+            db.session.commit()
         # 创建架构记录
         new_architecture = Architecture(
             requirement_id=requirement_id,

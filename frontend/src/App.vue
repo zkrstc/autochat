@@ -7,18 +7,20 @@
             <router-view />
         </div>
     </main>
+    <ChatbotFloat />
 </div>
 </template>
 
 <script>
 import SelfPage from './components/SelfPage.vue';
 import Sidebar from './components/SiderBar.vue';
-
+import ChatbotFloat from './views/ChatbotFloat.vue';
 export default {
   name: 'App',
   components: {
     SelfPage,
-    Sidebar
+    Sidebar,
+    ChatbotFloat
   }
 };
 </script>
